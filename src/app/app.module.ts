@@ -32,6 +32,7 @@ import { SettingComponent } from './setting/setting.component';
 import { HelpComponent } from './help/help.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ClassComponent } from './class/class.component';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 
 
 
@@ -100,7 +101,8 @@ let firebaseConfig= {
     Ng2SearchPipeModule,
     OrderModule,
     ChartsModule,
-    QRCodeModule
+    QRCodeModule,
+    AngularFireStorageModule
     
   ],
   providers: [ApiService],

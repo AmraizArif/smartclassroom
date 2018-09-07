@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+
 declare var jquery:any;
 declare var $ :any;
 @Component({
@@ -10,7 +14,9 @@ declare var $ :any;
 })
 export class ClassComponent implements OnInit {
 
-  constructor(private api:ApiService, private route: ActivatedRoute,private router:Router) { }
+  constructor(private api:ApiService, private route: ActivatedRoute,private router:Router,private storage:AngularFireStorage) { }
+  uploadPercent: Observable<number>;
+  downloadURL: Observable<string>;
 
   class;
   students:any =[{rollno:'SP14-BSE-088', name:'Moeid Saleem Khan'}];
@@ -19,6 +25,10 @@ export class ClassComponent implements OnInit {
   classId;
   selectedAssignment;
   selectedQuiz;
+ public file;
+ public filePath;
+ public fileRef;
+  task;
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
@@ -54,6 +64,17 @@ export class ClassComponent implements OnInit {
   }
 
 
+  uploadFile(event) {
+     this.file = event.target.files[0];
+    this.file = event.target.files[0];
+ this.filePath = 'assignment'+Math.random().toString(36).substring(2);;
+   this.fileRef = this.storage.ref(this.filePath);
+    
+
+    // observe percentage changes
+   
+  }
+
   // Assigment - ADD
   submitAssignment(val){
     $('#addAssignmentModal').modal('hide')
@@ -61,7 +82,21 @@ export class ClassComponent implements OnInit {
     console.log(val);
 //file upload 
   // fileUpload(val.file);
-// val.file = <download_url> 
+// val.file = <download_url>
+//this.urlnew=this.downloadURL;
+
+const task = this.storage.upload(this.filePath, this.file);
+this.uploadPercent = task.percentageChanges();
+// get notified when the download URL is available
+task.snapshotChanges().pipe(
+    finalize(() => this.downloadURL = this.fileRef.getDownloadURL() )
+ )
+.subscribe()
+
+//this.urlnew=this.downloadURL;
+
+
+val.file=this.downloadURL;
 
     val.startDate = new Date().getUTCDate();
     val.classId = this.classId;

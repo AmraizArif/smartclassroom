@@ -283,8 +283,13 @@
                       <div class="col-md-12 form-group">
                           <label for=""></label>
 
-                          <div style="background-color:#fece1a;padding:30px;width:100%;border:2px;border-style: dotted">
-                          <p class="text-center">Upload File</p>
+                          
+
+
+                         <div style="background-color:#fece1a;padding:30px;width:100%;border:2px;border-style: dotted">
+                          
+                          <input type="file" class="text-center" (change)="uploadFile($event)" />
+                        
                           </div>
                           <input type="file"
                             class="form-control" name="deadline" aria-describedby="helpId" placeholder="Deadline" ngModel>
@@ -294,7 +299,12 @@
                       <label for="">Note</label>
                       <textarea class="form-control" name="note"  rows="3" placeholder=" Note.." ngModel></textarea>
                     </div>
-          
+                    
+                    <input type="file" (change)="uploadFile($event)" />
+                    <div>{{ uploadPercent | async }}</div>
+                    <a [href]="downloadURL | async"  name ="downloadURL" >{{ downloadURL | async }}</a>
+                     
+                      <img [src]="downloadURL|async" width="50" height="50"  name="link">
         
                 </div>
         </form>
