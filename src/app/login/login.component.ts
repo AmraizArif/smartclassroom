@@ -11,13 +11,13 @@ export class LoginComponent implements OnInit {
 
 
   user={
-    email:'moeidsaleemkhan@gmail.com',
-    password:'moeid123'
+    email:'username@email.com',
+    password:'anypass'
   }
 error;  
 correct={
-  email:'khushboohussain77@gmail.com',
-  password:'polio123'
+  email:'username@gmail.com',
+  password:'anypass'
 }
 
 
@@ -26,6 +26,9 @@ correct={
   ngOnInit() {
   }
 
+  resetPassword(email) {
+    this.api.resetPassword(email)
+  }
 
 
   login(){

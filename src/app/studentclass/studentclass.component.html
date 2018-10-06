@@ -1,0 +1,334 @@
+
+<div class="main-panel">
+  <app-studentheader></app-studentheader>
+  <div class="content" >
+  <div class="container-fluid row">
+      <p>
+          <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Assignments</a>
+          <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample2" role="button" aria-expanded="false" aria-controls="multiCollapseExample2">Reading Material</a>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample4" aria-expanded="false" aria-controls="multiCollapseExample4">Notification</button>
+
+
+        </p>
+
+        
+        
+    <!-- READ ASSIGNMENTS -->
+    <div class="col-md-12">
+    <div class="collapse multi-collapse" id="multiCollapseExample1">
+     
+          <div class="card">
+              <div class="card-header card-header-primary">
+                  <h4 class="card-title text-center ">Assignments               
+                      <!-- <div class="pull-right btn btn-warning" data-toggle="modal" role="dialog" data-target="#addAssignmentModal" data-backdrop="static" date-keyboard="false" data-focus="true" #tref><i class="fa fa-plus" aria-hidden="true"></i> ADD</div> -->
+                  </h4>
+                  <p class="card-category"> Current Assignments </p>
+              </div>
+              <div class="card-body">
+                  <div class="table-responsive">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <a class="btn btn-secondary" type="button" aria-label=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                      </span>
+                      <input type="search" class="form-control" name="name" id="name" placeholder="Search..." aria-label="" [(ngModel)]="term">
+                    </div>
+
+                    
+                    <table class="table"> 
+                        <thead class=" text-primary">
+                            <th (click)="orderBy('courseName')">
+                                Assignment #
+                                <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                            </th>
+                            
+                            <th (click)="orderBy('courseId')">
+                              Deadline
+                              <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                            </th>
+                            <th>
+                              File
+                            </th>
+                            <th>
+                              Status
+                            </th>
+                             <th>
+                                Actions
+                            </th>
+
+                        </thead>
+                        <tbody *ngIf="assigments">
+                            <tr *ngFor="let x of assigments">
+                                <td class="small">
+                                  {{x?.num}}
+                                </td>
+                                <td class="small">
+                                  {{x?.deadline}}
+                                </td>
+                                <td class="small">
+                               <a href="{{x?.urlnew}}">  <img src="{{x?.urlnew}}" width="50" height="50"  name="link"> </a>
+                                </td>
+                                <td class="small">
+                                    
+                                        <span class="badge badge-warning" *ngIf="x.status == 'active'">Active</span>
+                                        <span class="badge badge-success" *ngIf="x.status == 'completed'">Completed</span>
+                                        <span class="badge badge-danger" *ngIf="x.status == 'cancel'">Cancel</span>
+                     
+                                </td>
+                                 <td>
+
+                                    <span class="btn btn-sm btn-danger" (click)="selectedAssignment = x" data-toggle="modal" data-target="#deleteAssignmentModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
+                                    <span class="btn btn-sm btn-warning" (click)="selectedAssignment = x" data-toggle="modal" data-target="#editAssignmentModal" > <i class="fa fa-edit" aria-hidden="true"></i></span> 
+                                    <span class="btn btn-sm btn-success" (click)="AssignmentDetails(x.id)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
+                                  </td>
+                            </tr>
+                        </tbody>
+                    </table>                   </div>
+              </div>
+          </div>
+      </div>
+
+</div>
+
+     
+
+
+
+
+    <!--
+    <div >
+      <div class="card">
+          <div class="card-body">
+              <div class="card card-profile"  >
+                  <div class="card-avatar">
+                      <a>
+                          <img class="img" src="./assets/img/faces/avatar.jpg " />
+
+                        
+                      </a>
+                  </div>
+                  <div class="card-body">
+                          <!-- <input type="text" class="form-control" [(ngModel)]="class.photo"> -->
+<!--
+                      <h6 class="card-category text-gray">{{class?.room}} </h6>
+                      <h4 class="card-title">{{class?.courseName}} / {{class?.courseId}} </h4>
+                      <p class="card-description">
+                         {{admin?.aboutMe}}
+                         <br>
+                         <strong>32</strong>  Students
+                         
+                      </p>
+                      <table class="text-center table bordered striped">
+                          <thead style="background-color:rgba(0, 0, 0, 0.086)">
+                             <th>Monday</th>
+                             <th>Tuesday</th>
+                             <th>Wednesday</th>
+                             <th>Thursday</th>
+                             <th>Friday</th>
+                           </thead>
+                           <tbody>
+                             <tr>
+                                <td class="small">2:30pm -- 5:30pm</td>
+                                <td>2:30pm -- 5:30pm</td>
+                                <td>2:30pm -- 5:30pm</td>
+                                <td>2:30pm -- 5:30pm</td>
+                                <td>2:30pm -- 5:30pm</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <hr>
+                        
+                      <a  class="btn btn-warning btn-round" (click)="logOut()">Setting</a>
+                  </div>
+              </div>
+              <div class="table-responsive">
+                <div class="input-group">
+                  <span class="input-group-btn">
+                    <a class="btn btn-secondary" type="button" aria-label=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                  </span>
+                  <input type="search" class="form-control" name="name" id="name" placeholder="Search student..." aria-label="" [(ngModel)]="term">
+                </div>
+
+                
+                  <table class="table">
+                      <thead class=" text-primary">
+                          <th>
+                            Roll No
+                          </th>
+                          <th (click)="orderBy('courseName')">
+                             Name
+                              <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                          </th>
+                          
+                           <th>
+                              Actions
+                          </th>
+
+                      </thead>
+                      <tbody *ngIf="students">
+                          <tr *ngFor="let x of students | filter:term | orderBy: order" >
+                              <td>{{x?.rollno}}</td>
+                              <td>{{x.name}}</td>
+                              <td>
+                                  <!-- <span class="btn btn-sm btn-danger" (click)="selectedVaccine = x" data-toggle="modal" data-target="#deleteModal" > <i class="fa fa-remove" aria-hidden="true"></i></span>  -->
+                                  <!-- <span class="btn btn-sm btn-warning" (click)="selectedVaccine = x" data-toggle="modal" data-target="#editModal" > <i class="fa fa-edit" aria-hidden="true"></i></span>  -->
+                                <!--  <span class="btn btn-sm btn-success" (click)="details(x.id)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
+                                </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+
+</div>
+
+
+
+
+ 
+
+
+  
+
+  
+
+
+
+
+  <!- READ READING MATERIAL -->
+  <div class="col-md-12">
+  <div class="collapse multi-collapse" id="multiCollapseExample2">
+    
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title text-center ">Reading Material              
+                    <!-- <div class="pull-right btn btn-warning" data-toggle="modal" role="dialog" data-target="#addMaterialModal" data-backdrop="static" date-keyboard="false" data-focus="true" #tref><i class="fa fa-plus" aria-hidden="true"></i> ADD</div> -->
+                </h4>
+                <p class="card-category"> Slides,Books and Other Material etc </p>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                  <div class="input-group">
+                    <span class="input-group-btn">
+                      <a class="btn btn-secondary" type="button" aria-label=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                    </span>
+                    <input type="search" class="form-control" name="name" id="name" placeholder="Search..." aria-label="" [(ngModel)]="term">
+                  </div>
+
+                  
+                  <table class="table"> 
+                      <thead class=" text-primary">
+                          <th (click)="orderBy('courseName')">
+                              Title
+                              <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                          </th>
+                          
+                          <th (click)="orderBy('courseId')">
+                            Version
+                            <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                          </th>
+                          <th>
+                            File
+                          </th>
+                         
+                      </thead>
+                      <tbody *ngIf="readingmaterial">
+                          <tr *ngFor="let x of readingmaterial">
+                              <td class="small">
+                                {{x?.title}}
+                              </td>
+                              <td class="small">
+                                {{x?.note}}
+                              </td>
+                              <td class="small">
+                                <a href="{{x?.urlnew}}"><img src="{{x?.urlnew}}" width="50" height="50"  name="link"> </a>
+                              </td>
+                              <td>
+
+                                  <span class="btn btn-sm btn-danger" (click)="selectedMaterial = x" data-toggle="modal" data-target="#deleteMaterialModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
+                                  <span class="btn btn-sm btn-warning" (click)="selectedMaterial = x" data-toggle="modal" data-target="#editMaterialModal" > <i class="fa fa-edit" aria-hidden="true"></i></span> 
+                                  <span class="btn btn-sm btn-success" (click)="AssignmentDetails(x.id)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
+                                </td>
+                              
+                          </tr>
+                      </tbody>
+                  </table>                   </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!-- Read Notification -->
+
+      
+<div class="col-md-12">
+  <div class="collapse multi-collapse" id="multiCollapseExample4">
+<div class="card">
+    <div class="card-header card-header-primary">
+        <h4 class="card-title text-center ">Notification              
+            <!-- <div class="pull-right btn btn-warning" data-toggle="modal" role="dialog" data-target="#addNotificationModal" data-backdrop="static" date-keyboard="false" data-focus="true" #tref><i class="fa fa-plus" aria-hidden="true"></i> ADD</div> -->
+        </h4>
+        <p class="card-category text-center"> Course Announcements </p>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+          <!-- <div class="input-group">
+             <span class="input-group-btn">
+              <a class="btn btn-secondary" type="button" aria-label=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+            </span>
+            <input type="search" class="form-control" name="name" id="name" placeholder="Search..." aria-label="" [(ngModel)]="term"> -->
+          <!-- </div> --> 
+
+          
+           <table class="table"> 
+                <thead class=" text-primary">
+                    <th (click)="orderBy('courseName')">
+                        Notification Id #
+                        <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                    </th>
+                    <th (click)="orderBy('courseName')">
+                      Description
+                      <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                  </th>
+                    <th (click)="orderBy('courseId')">
+                      Deadline
+                      <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                    </th>
+                    <th>
+                      Status
+                    </th>
+                     
+
+                 </thead>
+                <tbody *ngIf="notifications">
+                  <tr *ngFor="let x of notifications">
+                        <td class="strong">
+                          {{x?.id}}
+                        </td>
+                        <td class="small ">
+                            <b>{{x?.description}}</b>
+                        </td>
+                        <td class="small">
+                            {{x?.deadline}}
+                        </td>
+                        <td class="small">
+                          <span class="badge badge-warning" *ngIf="x.status == 'active'">Current</span>
+                          <span class="badge badge-success" *ngIf="x.status == 'completed'">Expired</span>
+                          <span class="badge badge-danger" *ngIf="x.status == 'cancel'">Future</span>
+                  </td>
+                        
+                          
+                    </tr>
+                </tbody>
+            </table> 
+        </div>
+    </div>
+</div>
+</div>
+</div> 
+

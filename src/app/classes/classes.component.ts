@@ -16,7 +16,7 @@ declare var $ :any;
 export class ClassesComponent implements OnInit {
 
 
-  vaccines;
+  classes;
   selectedClass;
 
 
@@ -39,16 +39,30 @@ export class ClassesComponent implements OnInit {
       })
     }).subscribe(resp=>{
       console.log(resp);
-      this.vaccines =resp;
+      this.classes =resp;
     })
+
+    $(document).ready(function() {
+      $('#submit').click(function(event){
+          var data = $('#textbox').val();
+          var length = data.length;
+          if(length < 2) {
+             console.log("error");
+          }
+      });
+  });
 
   }
   details(c){
     console.log(c);
-    this.router.navigate([`/dashboard/classes/${c.id}`]);
+    //this.router.navigate([`/dashboard/classes/${c.id}`]);
+    this.router.navigate([`/dashboard/cpanel/${c.id}`]);
   }
 
   submit(val){
+    // if( (val.courseName.trim().length == 0) || (val.courseId.trim().length == 0) ){
+    //   alert("Please fill all fields");
+    // }else{
     $('#exampleModal').modal('hide');
 
     let uid= localStorage.getItem('uid');
@@ -59,6 +73,7 @@ export class ClassesComponent implements OnInit {
       console.log(err);
     });
   }
+  
 
   delete(data){
     $('#deleteModal').modal('hide');

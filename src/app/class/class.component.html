@@ -3,14 +3,26 @@
   <app-header></app-header>
   <div class="content" >
   <div class="container-fluid row">
+      <p>
+          <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Assignments</a>
+          <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample2" role="button" aria-expanded="false" aria-controls="multiCollapseExample2">Reading Material</a>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample4" aria-expanded="false" aria-controls="multiCollapseExample4">Notification</button>
+
+
+        </p>
+
+        
+        
     <!-- READ ASSIGNMENTS -->
-      <div class="col-md-4">
+    <div class="col-md-12">
+    <div class="collapse multi-collapse" id="multiCollapseExample1">
+     
           <div class="card">
               <div class="card-header card-header-primary">
                   <h4 class="card-title text-center ">Assignments               
                       <div class="pull-right btn btn-warning" data-toggle="modal" role="dialog" data-target="#addAssignmentModal" data-backdrop="static" date-keyboard="false" data-focus="true" #tref><i class="fa fa-plus" aria-hidden="true"></i> ADD</div>
                   </h4>
-                  <p class="card-category"> Your class schedule or taken </p>
+                  <p class="card-category"> Current Assignments </p>
               </div>
               <div class="card-body">
                   <div class="table-responsive">
@@ -28,9 +40,13 @@
                                 Assignment #
                                 <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
                             </th>
+                            
                             <th (click)="orderBy('courseId')">
                               Deadline
                               <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                            </th>
+                            <th>
+                              File
                             </th>
                             <th>
                               Status
@@ -47,6 +63,9 @@
                                 </td>
                                 <td class="small">
                                   {{x?.deadline}}
+                                </td>
+                                <td class="small">
+                                  <img src="{{x?.urlnew}}" width="50" height="50"  name="link"> 
                                 </td>
                                 <td class="small">
                                     
@@ -68,16 +87,18 @@
           </div>
       </div>
 
-
+</div>
 
       <!-- READ QUIZES -->
-      <div class="col-md-4">
+      
+       <div class="col-md-12">
+          <div class="collapse multi-collapse" id="multiCollapseExample3">
         <div class="card">
             <div class="card-header card-header-primary">
                 <h4 class="card-title text-center ">Quizes               
                     <div class="pull-right btn btn-warning" data-toggle="modal" role="dialog" data-target="#addQuizModal" data-backdrop="static" date-keyboard="false" data-focus="true" #tref><i class="fa fa-plus" aria-hidden="true"></i> ADD</div>
                 </h4>
-                <!-- <p class="card-category text-center"> Time for  </p> -->
+                <p class="card-category text-center"> Time for  </p>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -108,9 +129,9 @@
                             </th>
                              <th>
                                 Actions
-                            </th>
+                            </th> -->
 
-                        </thead>
+                         </thead>
                         <tbody *ngIf="quizes">
                           <tr *ngFor="let x of quizes">
                                 <td class="strong">
@@ -130,8 +151,8 @@
                                  <td class="small">
                                     <span class="btn btn-sm btn-danger" (click)="selectedQuiz = x" data-toggle="modal" data-target="#deleteQuizModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
                                     <span class="btn btn-sm btn-warning" (click)="selectedQuiz = x" data-toggle="modal" data-target="#editQuizModal" > <i class="fa fa-edit" aria-hidden="true"></i></span> 
-                                    <span class="btn btn-sm btn-success" (click)="detailsQuiz(x.id)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
-                                  </td>
+                                    <span class="btn btn-sm btn-success" (click)="detailsQuiz(x.id)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span>  -->
+                                   </td>
                                   
                             </tr>
                         </tbody>
@@ -139,8 +160,15 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-4">
+        </div>
+    </div> 
+
+
+
+
+
+    <!--
+    <div >
       <div class="card">
           <div class="card-body">
               <div class="card card-profile"  >
@@ -153,7 +181,7 @@
                   </div>
                   <div class="card-body">
                           <!-- <input type="text" class="form-control" [(ngModel)]="class.photo"> -->
-
+<!--
                       <h6 class="card-category text-gray">{{class?.room}} </h6>
                       <h4 class="card-title">{{class?.courseName}} / {{class?.courseId}} </h4>
                       <p class="card-description">
@@ -216,7 +244,7 @@
                               <td>
                                   <!-- <span class="btn btn-sm btn-danger" (click)="selectedVaccine = x" data-toggle="modal" data-target="#deleteModal" > <i class="fa fa-remove" aria-hidden="true"></i></span>  -->
                                   <!-- <span class="btn btn-sm btn-warning" (click)="selectedVaccine = x" data-toggle="modal" data-target="#editModal" > <i class="fa fa-edit" aria-hidden="true"></i></span>  -->
-                                  <span class="btn btn-sm btn-success" (click)="details(x.id)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
+                                <!--  <span class="btn btn-sm btn-success" (click)="details(x.id)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
                                 </td>
                           </tr>
                       </tbody>
@@ -228,7 +256,7 @@
   </div>
 
 </div>
-</div>
+
 
 
 
@@ -302,9 +330,9 @@
                     
                     <input type="file" (change)="uploadFile($event)" />
                     <div>{{ uploadPercent | async }}</div>
-                    <a [href]="downloadURL | async"  name ="downloadURL" >{{ downloadURL | async }}</a>
+                    <a [href]="downloadURL "  name ="downloadURL" >{{ downloadURL }}</a>
                      
-                      <img [src]="downloadURL|async" width="50" height="50"  name="link">
+                      <img [src]="downloadURL" [alt]="downloadURL" width="50" height="50"  name="link">
         
                 </div>
         </form>
@@ -522,3 +550,305 @@
     </div>
   </div>
   </div>
+
+
+  <!--  ADD RM MODAL -->
+
+  <div class="modal fade" id="addMaterialModal" tabindex="-1" role="dialog" aria-labelledby="addMaterialModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addMaterialModalLabel">Add Reading Material</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <form #addMaterialForm="ngForm" (submit)="submitMaterial(addMaterialForm.value)">
+                <div class="row">
+          <div class="col-md-12 form-group">
+            <label for=""></label>
+            <input type="text"
+              class="form-control" name="title" placeholder="Title" ngModel>
+          </div>
+          
+                      
+                  <div class="col-md-12 form-group">
+                      <label for="">Version</label>
+                      <textarea class="form-control" name="note"  rows="3" placeholder=" Version.." ngModel></textarea>
+                    </div>
+                    
+                    <input type="file" (change)="uploadFile($event)" />
+                    <div>{{ uploadPercent | async }}</div>
+                    <a [href]="downloadURL "  name ="downloadURL" >{{ downloadURL }}</a>
+                     
+                      <img [src]="downloadURL" width="50" height="50"  name="link">
+        
+                </div>
+        </form>
+        
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="submitMaterial(addMaterialForm.value)" >Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--Delete Reading Material-->
+<div class="modal fade" id="deleteMaterialModal" tabindex="-1" role="dialog" aria-labelledby="deleteMaterialModal" aria-hidden="true">
+    <div class="modal-dialog modal-sm|lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="deleteModal">Confirm Delete</h4>
+        </div>
+        <div class="modal-body" *ngIf="selectedMaterial">
+         Are you sure you want to delete <span class="text-danger">  {{ 'Name #' + selectedMaterial?.title}}</span> ?       
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-danger" (click)="deleteMaterial(selectedMaterial)">Delete</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  
+
+  <!-- READ READING MATERIAL -->
+  <div class="col-md-12">
+  <div class="collapse multi-collapse" id="multiCollapseExample2">
+    
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title text-center ">Reading Material              
+                    <div class="pull-right btn btn-warning" data-toggle="modal" role="dialog" data-target="#addMaterialModal" data-backdrop="static" date-keyboard="false" data-focus="true" #tref><i class="fa fa-plus" aria-hidden="true"></i> ADD</div>
+                </h4>
+                <p class="card-category"> Slides,Books and Other Material etc </p>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                  <div class="input-group">
+                    <span class="input-group-btn">
+                      <a class="btn btn-secondary" type="button" aria-label=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                    </span>
+                    <input type="search" class="form-control" name="name" id="name" placeholder="Search..." aria-label="" [(ngModel)]="term">
+                  </div>
+
+                  
+                  <table class="table"> 
+                      <thead class=" text-primary">
+                          <th (click)="orderBy('courseName')">
+                              Title
+                              <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                          </th>
+                          
+                          <th (click)="orderBy('courseId')">
+                            Version
+                            <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                          </th>
+                          <th>
+                            File
+                          </th>
+                         
+                      </thead>
+                      <tbody *ngIf="readingmaterial">
+                          <tr *ngFor="let x of readingmaterial">
+                              <td class="small">
+                                {{x?.title}}
+                              </td>
+                              <td class="small">
+                                {{x?.note}}
+                              </td>
+                              <td class="small">
+                                <img src="{{x?.urlnew}}" width="50" height="50"  name="link"> 
+                              </td>
+                              <td>
+
+                                  <span class="btn btn-sm btn-danger" (click)="selectedMaterial = x" data-toggle="modal" data-target="#deleteMaterialModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
+                                  <span class="btn btn-sm btn-warning" (click)="selectedMaterial = x" data-toggle="modal" data-target="#editMaterialModal" > <i class="fa fa-edit" aria-hidden="true"></i></span> 
+                                  <span class="btn btn-sm btn-success" (click)="AssignmentDetails(x.id)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
+                                </td>
+                              
+                          </tr>
+                      </tbody>
+                  </table>                   </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--  EDIT MATERIAL-->
+
+<div class="modal fade" id="editMaterialModal" tabindex="-1" role="dialog" aria-labelledby="Update Material  Modal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModal">Edit Material</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="selectedMaterial">
+        <div class="container">
+          <form #materialUpdateForm="ngForm" (submit)="updateMaterial(selectedMaterial)">
+              <div class="row">
+        <div class="col-md-12 form-group">
+          <label for=""></label>
+          <input type="text"
+            class="form-control" name="title" id="" aria-describedby="helpId" placeholder="Title" [(ngModel)]="selectedMaterial.title">
+        </div>
+        <div class="col-md-6 form-group">
+            <label for=""></label>
+            <input type="number"
+              class="form-control" name="num" id="" aria-describedby="helpId" placeholder="Version #"  [(ngModel)]="selectedMaterial.note">
+          </div>
+          <input type="file" (change)="uploadFile($event)" />
+          <div>{{ uploadPercent | async }}</div>
+          <a [href]="downloadURL "  name ="downloadURL" >{{ downloadURL }}</a>
+           
+            <img [src]="downloadURL" [alt]="downloadURL" width="50" height="50"  name="link">
+            
+                
+              </div>
+      </form>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="updateMaterial(selectedMaterial)" >Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Read Notification -->
+
+      
+<div class="col-md-12">
+  <div class="collapse multi-collapse" id="multiCollapseExample4">
+<div class="card">
+    <div class="card-header card-header-primary">
+        <h4 class="card-title text-center ">Notification              
+            <div class="pull-right btn btn-warning" data-toggle="modal" role="dialog" data-target="#addNotificationModal" data-backdrop="static" date-keyboard="false" data-focus="true" #tref><i class="fa fa-plus" aria-hidden="true"></i> ADD</div>
+        </h4>
+        <p class="card-category text-center"> Course Announcements </p>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+          <!-- <div class="input-group">
+             <span class="input-group-btn">
+              <a class="btn btn-secondary" type="button" aria-label=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+            </span>
+            <input type="search" class="form-control" name="name" id="name" placeholder="Search..." aria-label="" [(ngModel)]="term"> -->
+          <!-- </div> --> 
+
+          
+           <table class="table"> 
+                <thead class=" text-primary">
+                    <th (click)="orderBy('courseName')">
+                        Notification Id #
+                        <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                    </th>
+                    <th (click)="orderBy('courseName')">
+                      Description
+                      <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                  </th>
+                    <th (click)="orderBy('courseId')">
+                      Deadline
+                      <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                    </th>
+                    <th>
+                      Status
+                    </th>
+                     
+
+                 </thead>
+                <tbody *ngIf="notifications">
+                  <tr *ngFor="let x of notifications">
+                        <td class="strong">
+                          {{x?.id}}
+                        </td>
+                        <td class="small ">
+                            <b>{{x?.description}}</b>
+                        </td>
+                        <td class="small">
+                            {{x?.deadline}}
+                        </td>
+                        <td class="small">
+                          <span class="badge badge-warning" *ngIf="x.status == 'active'">Current</span>
+                          <span class="badge badge-success" *ngIf="x.status == 'completed'">Expired</span>
+                          <span class="badge badge-danger" *ngIf="x.status == 'cancel'">Future</span>
+                  </td>
+                        
+                          
+                    </tr>
+                </tbody>
+            </table> 
+        </div>
+    </div>
+</div>
+</div>
+</div> 
+
+<!-- Add Notification-->
+
+<div class="modal fade" id="addNotificationModal" tabindex="-1" role="dialog" aria-labelledby="addNotificationModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addNotificationModalLabel">Add Notification</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <form #addNotificationForm="ngForm" (submit)="submitNotification(addNotificationForm.value)">
+              <div class="row">
+        <div class="col-md-12 form-group">
+          <label for=""></label>
+          <input type="text"
+            class="form-control" name="id" placeholder="ID" ngModel>
+        </div>
+        
+                    
+                <div class="col-md-12 form-group">
+                    <label for="">Description</label>
+                    <textarea class="form-control" name="description"  rows="3" placeholder=" Description.." ngModel></textarea>
+                  </div>
+                  
+                  <div class="col-md-6 form-group">
+                    <label for="">Deadline</label>
+                    <input type="date"
+                      class="form-control" name="deadline" aria-describedby="helpId" placeholder="Deadline" ngModel>
+                  </div>
+              
+                        <div class="col-md-6 form-group">
+                                <label for="">Status</label>
+                                <select class="form-control" name="status" ngModel>
+                                  <option value="active">Current</option>
+                                  <option value="completed">Expired</option>
+                                  <option value="cancel">Future</option>
+                                </select>
+                            </div>
+                  
+      
+              </div>
+      </form>
+      
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="submitNotification(addNotificationForm.value)" >Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

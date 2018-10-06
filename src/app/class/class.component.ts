@@ -19,16 +19,21 @@ export class ClassComponent implements OnInit {
   downloadURL: Observable<string>;
 
   class;
-  students:any =[{rollno:'SP14-BSE-088', name:'Moeid Saleem Khan'}];
+  students:any =[{rollno:'SP15-BSE-000', name:'Ali Zahid'}];
   assigments;
   quizes;
+  notifications;
   classId;
   selectedAssignment;
   selectedQuiz;
+  selectedNotification;
+  readingmaterial;
+  selectedMaterial;
  public file;
  public filePath;
  public fileRef;
-  task;
+ public urlnew;
+  public task;
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
@@ -37,6 +42,8 @@ export class ClassComponent implements OnInit {
     console.log(id); 
     this.getAssigments();
     this.getQuizes();
+    this.getMaterial();
+    this.getNotification();
   }
 
   getClass(id){
@@ -63,14 +70,107 @@ export class ClassComponent implements OnInit {
     })
   }
 
+//Reading MAterial get set
+getMaterial(){
+  this.api.getspecificMaterial(this.classId).map(actions => {
+    return actions.map(a => {
+      const data = a.payload.doc.data()
+      const id = a.payload.doc.id;
+      return { id, ...data };
+    })
+  }).subscribe(resp=>{
+    this.readingmaterial =resp;
+  })
+}
+ // Material - ADD
+ submitMaterial(val){
+  $('#addMaterialModal').modal('hide')
+
+  console.log(val);
+
+
+val.urlnew=this.downloadURL;
+  val.startDate = new Date().getUTCDate();
+  val.classId = this.classId;
+
+  this.api.addMaterial(val).then(res=>{
+
+  },err=>{
+    console.log(err);
+  })
+
+}
+
+
+deleteMaterial(data){
+  $('#deleteMaterialModal').modal('hide');
+  this.selectedMaterial ={};
+  //now removing the class
+  this.api.deleteMAterial(data.id).then(res=>{
+
+  }, err=>{})
+}
+
+
+updateMaterial(data){
+  $('#editMaterialModal').modal('hide');
+  data.urlnew=this.downloadURL;
+  this.api.updateMaterial(data.id, data).then(res=>{
+
+    this.selectedMaterial ={};
+  });
+}
+
+//Notification Get Set
+getNotification(){
+  this.api.getNotifications(this.classId).map(actions => {
+    return actions.map(a => {
+      const data = a.payload.doc.data()
+      const id = a.payload.doc.id;
+      return { id, ...data };
+    })
+  }).subscribe(resp=>{
+    this.notifications =resp;
+  })
+}
+
+submitNotification(val){
+  $('#addNotificationModal').modal('hide')
+
+  console.log(val);
+
+
+  val.startDate = new Date().getUTCDate();
+  val.classId = this.classId;
+
+  this.api.addNotification(val).then(res=>{
+
+  },err=>{
+    console.log(err);
+  })
+
+}
+
+
+
 
   uploadFile(event) {
-     this.file = event.target.files[0];
     this.file = event.target.files[0];
- this.filePath = 'assignment'+Math.random().toString(36).substring(2);;
+    //this.file = event.target.files[0];
+ this.filePath = Math.random().toString(36).substring(2);;
    this.fileRef = this.storage.ref(this.filePath);
-    
+   this.task = this.fileRef.put(this.file);
+   this.uploadPercent = this.task.percentageChanges();
+   this.task.snapshotChanges().pipe(
+    finalize(() => {
+      this.fileRef.getDownloadURL().subscribe(url => {
+        console.log(url); 
+        this.downloadURL=url;// <-- do what ever you want with the url..
+      });
+    })
+  ).subscribe();
 
+ //console.log(this.downloadURL);
     // observe percentage changes
    
   }
@@ -85,19 +185,22 @@ export class ClassComponent implements OnInit {
 // val.file = <download_url>
 //this.urlnew=this.downloadURL;
 
-const task = this.storage.upload(this.filePath, this.file);
-this.uploadPercent = task.percentageChanges();
+
+
+
+
+
 // get notified when the download URL is available
-task.snapshotChanges().pipe(
-    finalize(() => this.downloadURL = this.fileRef.getDownloadURL() )
- )
-.subscribe()
+//this.fileRef.DownloadURL().then(function(url) {
+ // console.log(url);
+//});
+//val.urlnew=this.downloadURL;
 
 //this.urlnew=this.downloadURL;
 
 
-val.file=this.downloadURL;
-
+//val.file=this.downloadURL;
+val.urlnew=this.downloadURL;
     val.startDate = new Date().getUTCDate();
     val.classId = this.classId;
 

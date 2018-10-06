@@ -1,0 +1,38 @@
+<div class="main-panel">
+  <app-studentheader>
+   
+  </app-studentheader>
+<div class="mydiv" style="padding:30px;border:2px;border-style: dotted">
+<u><h3 style="color:#9c27b0">TITLE:  {{class?.courseName}}</h3></u> <br>
+<label style="color:#9c27b0">COURSE ID:  {{classId}}</label><br>
+<label style="color:#9c27b0">Room:  {{class?.room}}</label><br>
+<label style="color:#9c27b0">Id: {{class?.courseId}}</label><br>
+<button class="btn" id="btn123" (click)="Alert()">CHECK THIS</button><br>
+
+<label>QR CODE</label><br>
+<qrcode [qrdata]="classId"  colordark="#A23DB7" [size]="128" [level]="'L'"></qrcode>
+
+</div>
+  <div class="card" style="width: 58rem;">
+      <div class="card-body">
+        <h5 class="card-title">RESOURCES</h5>
+        <p class="card-text">Assignments,Reading Material and Notifications </p>
+        <a (click)="ndetail(classId)" class="btn btn-primary">Resources</a>
+      </div>
+    </div>
+    
+    <div class="card text-center" style="width: 58rem;">
+      <div class="card-body">
+        <h5 class="card-title">DISCUSSION PANEL</h5>
+        <p class="card-text">Public/Private Discussion in the course.</p>
+        <a href="#" class="btn btn-primary">Discussion</a>
+      </div>
+    </div>
+    
+    <div class="card text-right" style="width: 58rem;">
+      <div class="card-body">
+        <h5 class="card-title">QUIZ</h5>
+        <p class="card-text">Mcqs Based Quiz.</p>
+        <a href="#" class="btn btn-primary">Quiz</a>
+      </div>
+    </div>

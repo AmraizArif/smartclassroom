@@ -20,7 +20,7 @@ correct={
 }
 
 
-  constructor(private router:Router, private api:ApiService) { }
+constructor(private router:Router, private api:ApiService) { }
 
   ngOnInit() {
   }

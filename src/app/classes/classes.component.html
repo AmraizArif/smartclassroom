@@ -2,8 +2,11 @@
 
 <div class="main-panel">
   <app-header></app-header>
+  
   <div class="content">
+    
   <div class="container-fluid">
+    
       <div class="col-md-12">
           <div class="card">
               <div class="card-header card-header-primary">
@@ -43,10 +46,10 @@
                                   Room No
                                   <i *ngIf="order == 'room'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
                               </th>
-                              <th (click)="orderBy('dosage')">
+                              <!-- <th (click)="orderBy('dosage')">
                                   Students
                                   <i *ngIf="order == 'dosage'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
-                              </th>
+                              </th> -->
                               <th>
                                 Note
                               </th>
@@ -55,8 +58,8 @@
                               </th>
 
                           </thead>
-                          <tbody *ngIf="vaccines">
-                              <tr *ngFor="let x of vaccines | filter:term | orderBy: order" >
+                          <tbody *ngIf="classes">
+                              <tr *ngFor="let x of classes | filter:term | orderBy: order" >
                                   <td>
                                     {{x?.id}}
                                   </td>
@@ -73,9 +76,9 @@
                                   <td>
                                       {{x?.room}}
                                   </td>
-                                  <td>
-                                    0
-                                  </td>
+                                  <!-- <td>
+                                    {{x?.students.length}}
+                                  </td> -->
                                    <td>
                                       {{x?.note}}
                                    </td>
@@ -132,27 +135,27 @@
       </div>
       <div class="modal-body">
         <div class="container">
-          <form #classForm="ngForm" (submit)="submit(classForm.value)">
+          <form #classForm="ngForm" name="vm.form" (submit)="submit(classForm.value)"  ngNativeValidate>
               <div class="row">
         <div class="col-md-6 form-group">
           <label for=""></label>
           <input type="text"
-            class="form-control" name="courseName" id="" aria-describedby="helpId" placeholder="Course Name" ngModel>
+            class="form-control" name="courseName" id="" aria-describedby="helpId" placeholder="Course Name" ngModel required>
         </div>
         <div class="col-md-6 form-group">
           <label for=""></label>
           <input type="text"
-            class="form-control" name="courseId" id="" aria-describedby="helpId" placeholder="Course ID" ngModel>
+            class="form-control" name="courseId" id="" aria-describedby="helpId" placeholder="Course ID" ngModel required>
         </div>
         <div class="col-md-6 form-group">
             <label for=""></label>
             <input type="text"
-              class="form-control" name="room" id="" aria-describedby="helpId" placeholder="Room No" ngModel>
+              class="form-control" name="room" id="textbox" aria-describedby="helpId" placeholder="ROOM NO" ngModel required>
           </div>
    
                   <div class="col-md-12 form-group">
                     <label for="">Note</label>
-                    <textarea class="form-control" name="note" id="" rows="3" placeholder="Extra Note.." ngModel></textarea>
+                    <textarea class="form-control" name="note" id="" rows="3" placeholder="Extra Note.." ngModel required></textarea>
                   </div>
               </div>
       </form>
@@ -161,7 +164,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="submit(classForm.value)" >Save changes</button>
+        <button  type="button" id="submit" [disabled]="!classForm.valid" class="btn btn-primary" (click)="submit(classForm.value)" >Save changes</button>
       </div>
     </div>
   </div>

@@ -20,6 +20,9 @@ import { FooterComponent } from './footer/footer.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ApiService } from './api.service';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+ 
+import { ToastrModule } from 'ngx-toastr';
 
 //extenals
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
@@ -33,30 +36,60 @@ import { HelpComponent } from './help/help.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ClassComponent } from './class/class.component';
 import { AngularFireStorageModule } from 'angularfire2/storage';
+import { CoursepanelComponent } from './coursepanel/coursepanel.component';
+import { AuthService } from './auth.service';
+import { AuthGuard} from './core/auth.guard';
+import { StudentsignupComponent } from './studentsignup/studentsignup.component';
+import { StudentloginComponent } from './studentlogin/studentlogin.component';
+import { StudentdashboardComponent } from './studentdashboard/studentdashboard.component';
+import { StudenthomeComponent } from './studenthome/studenthome.component';
+import { StudentsideComponent } from './studentside/studentside.component';
+import { ShomeComponent } from './shome/shome.component';
+import { StudentclassesComponent } from './studentclasses/studentclasses.component';
+import { EnrolltestComponent } from './enrolltest/enrolltest.component';
+import { ScpanelComponent } from './scpanel/scpanel.component';
+import { StudentclassComponent } from './studentclass/studentclass.component';
+import { DiscussionpanelComponent } from './discussionpanel/discussionpanel.component';
+import{QrcodereaderService} from './qrcodereader.service';
+import { StudentheaderComponent } from './studentheader/studentheader.component';
+import { StudentprofileComponent } from './studentprofile/studentprofile.component';
 
 
 
 
 let ROUTES =[
-  {path:'', redirectTo:'landing', pathMatch:'full'},
+  {path:'', redirectTo:'login', pathMatch:'full'},
   {path:'landing', component:LandingComponent},
   {path:'statistics', component:HomeComponent},
   {path:'team', component:TeamComponent},
   {path:'about', component:AboutComponent },
   {path:'signup', component:SignupComponent},
   {path:'login', component:LoginComponent},
-  {path:'dashboard', component:DashboardComponent, children:[
+  {path:'sreg',component:StudentsignupComponent},
+  {path:'slogin',component:StudentloginComponent},
+  {path:'etest',component:EnrolltestComponent},
+  {path:'sdashboard',component:StudentdashboardComponent,children:[
+{path:'',redirectTo:'shome',pathMatch:'full'},
+{path:'shome',component:ShomeComponent},
+{path:'sclasses',component:StudentclassesComponent},
+{ path: 'scpanel/:id', component: ScpanelComponent},
+{ path: 'sclasses/:id' ,component:StudentclassComponent},
+{path:'profile',component:StudentprofileComponent}
+]
+},
+  {path:'dashboard', component:DashboardComponent,canActivate: [AuthGuard], children:[
     {path:'', redirectTo:'home', pathMatch:'full'},
     {path:'home', component:HomeComponent},
     {path:'profile', component:ProfileComponent},
     //real ones
-    { path: 'classes', component: ClassesComponent},
+    { path: 'classes', component: ClassesComponent,canActivate: [AuthGuard]},
     { path: 'classes/:id' ,component:ClassComponent},
     { path: 'setting', component: SettingComponent},
     { path: 'help', component: HelpComponent},
-
-
-  ]},
+    { path: 'cpanel/:id', component: CoursepanelComponent},
+    { path: 'discussion/:id' ,component:DiscussionpanelComponent},
+    
+]},
   
 
 
@@ -89,7 +122,21 @@ let firebaseConfig= {
     ClassesComponent,
     SettingComponent,
     HelpComponent,
-    ClassComponent
+    ClassComponent,
+    CoursepanelComponent,
+    StudentsignupComponent,
+    StudentloginComponent,
+    StudentdashboardComponent,
+    StudenthomeComponent,
+    StudentsideComponent,
+    ShomeComponent,
+    StudentclassesComponent,
+    EnrolltestComponent,
+    ScpanelComponent,
+    StudentclassComponent,
+    DiscussionpanelComponent,
+    StudentheaderComponent,
+    StudentprofileComponent
   ],
   imports: [
     BrowserModule,
@@ -102,10 +149,12 @@ let firebaseConfig= {
     OrderModule,
     ChartsModule,
     QRCodeModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    BrowserAnimationsModule, 
+    ToastrModule.forRoot(),
     
   ],
-  providers: [ApiService],
+  providers: [ApiService,AuthService,AuthGuard,QrcodereaderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

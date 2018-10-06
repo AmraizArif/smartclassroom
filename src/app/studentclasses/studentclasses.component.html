@@ -1,0 +1,214 @@
+
+
+<div class="main-panel">
+    <app-studentheader></app-studentheader>
+    
+    <div class="content">
+      
+    <div class="container-fluid">
+      
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title ">Classes                
+                        <div class="pull-right btn btn-warning" data-toggle="modal" role="dialog" data-target="#exampleModal" data-backdrop="static" date-keyboard="false" data-focus="true" #tref><i class="fa fa-plus" aria-hidden="true"></i> ENROLL COURSE</div>
+                    </h4>
+                    <p class="card-category"> Your registered courses </p>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                      <div class="input-group">
+                        <span class="input-group-btn">
+                          <a class="btn btn-secondary" type="button" aria-label=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                        </span>
+                        <input type="search" class="form-control" name="name" id="name" placeholder="Search..." aria-label="" [(ngModel)]="term">
+                      </div>
+  
+                      
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <th>
+                                   Class ID
+                                </th>
+                                <th>
+                                  QR
+                               </th>
+                                <th (click)="orderBy('courseName')">
+                                    Course Name
+                                    <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                                </th>
+                                <th (click)="orderBy('courseId')">
+                                  Course ID
+                                  <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+  
+                                </th>
+                                <th (click)="orderBy('room')">
+                                    Room No
+                                    <i *ngIf="order == 'room'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                                </th>
+                                <th (click)="orderBy('dosage')">
+                                    Students
+                                    <i *ngIf="order == 'dosage'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                                </th>
+                                <th>
+                                  Note
+                                </th>
+                                 <th>
+                                    Actions
+                                </th>
+  
+                            </thead>
+                            <tbody *ngIf="courses">
+                                <tr *ngFor="let x of courses | filter:term | orderBy: order" >
+                                    <td>
+                                      {{x?.id}}
+                                    </td>
+                                    <td>
+                                      <qrcode [qrdata]="x.id"  colordark="#A23DB7" [size]="128" [level]="'M'"></qrcode>
+  
+                                    </td>
+                                    <td>
+                                      {{x?.courseName}}
+                                    </td>
+                                    <td>
+                                        {{x?.courseId}}
+                                    </td>
+                                    <td>
+                                        {{x?.room}}
+                                    </td>
+                                    <td>
+                                      
+                                    </td>
+                                     <td>
+                                        {{x?.note}}
+                                     </td>
+                                     <td>
+  
+                                        <!-- <span class="btn btn-sm btn-danger" (click)="selectedClass = x" data-toggle="modal" data-target="#deleteModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
+                                        <span class="btn btn-sm btn-warning" (click)="selectedClass = x" data-toggle="modal" data-target="#editModal" > <i class="fa fa-edit" aria-hidden="true"></i></span>  -->
+                                        <span class="btn btn-sm btn-success" (click)="details(x)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
+                                      </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  </div>
+  
+  
+  
+  <!-- Modal DELETE -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+  <div class="modal-dialog modal-sm|lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="deleteModal">Confirm Delete</h4>
+      </div>
+      <div class="modal-body" *ngIf="selectedClass">
+       Are you sure you want to delete <span class="text-danger"> {{selectedClass?.courseName}}</span> Class?       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" (click)="delete(selectedClass)">Delete</button>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Course</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <form #classForm="ngForm" (submit)="submit(classForm.value)">
+                <div class="row">
+          <!-- <div class="col-md-6 form-group">
+            <label for=""></label>
+            <input type="text"
+              class="form-control" name="coursId" id="" aria-describedby="helpId" placeholder="Course Id" ngModel>
+
+              
+          </div> -->
+          <div class="col-md-6 form-group">
+            <label for=""></label>
+          
+
+              <!-- <input type=”file” accept="image/*"/ > -->
+          </div>
+          <input type="file" accept="image/*" (change)="uploadFile($event)" />
+       
+                </div>
+        </form>
+        
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="submit(classForm.value)" >Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+    <!-- Modal EDIT -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editModal">Edit Class</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="selectedClass">
+              <div class="container">
+                <form #classUpdateForm="ngForm" (submit)="update(selectedClass)">
+                    <div class="row">
+              <div class="col-md-12 form-group">
+                <label for=""></label>
+                <input type="text"
+                  class="form-control" name="courseName" id="" aria-describedby="helpId" placeholder="Course Name" [(ngModel)]="selectedClass.courseName">
+              </div>
+              <div class="col-md-6 form-group">
+                  <label for=""></label>
+                  <input type="text"
+                    class="form-control" name="courseId" id="" aria-describedby="helpId" placeholder="Course ID"  [(ngModel)]="selectedClass.courseId">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for=""></label>
+                    <input type="text"
+                      class="form-control" name="room" id="" aria-describedby="helpId" placeholder="Room No"  [(ngModel)]="selectedClass.room">
+                  </div>
+                       
+                    </div>
+            </form>
+            </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" (click)="update(selectedClass)" >Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>

@@ -12,18 +12,18 @@ export class HomeComponent implements OnInit {
   constructor(private api:ApiService) { }
 
 
-  doctors;
+  Classes;
   workers;
   guardians;
-  children;
-  vaccines;
+  assignment;
+  
   ngOnInit() {
-  // this.api.getClasses(localStorage.getItem('uid')).subscribe(resp=>{
-  //   this.doctors = resp.length;
-  // });
-  // this.api.getAllChildren().subscribe(respx=>{
-  //   this.children =respx.length;
-  // });
+   this.api.getClasses(localStorage.getItem('uid')).subscribe(resp=>{
+    this.Classes = resp.length;
+  });
+  this.api.getAllAssigments().subscribe(respx=>{
+     this.assignment =respx.length;
+   });
   // this.api.getVaccines().subscribe(respxx=>{
   //   this.vaccines = respxx.length;
   // });

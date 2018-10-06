@@ -1,0 +1,146 @@
+<div class="main-panel">
+    <!-- Navbar -->
+    <app-studentheader></app-studentheader>
+    <!-- End Navbar -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Edit Profile</h4>
+                            <p class="card-category">Complete your profile</p>
+                        </div>
+                        <div class="card-body" *ngIf="student">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Company (disabled)</label>
+                                            <input type="text" class="form-control" disabled [(ngModel)]="student.company">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Role</label>
+                                            <input type="text" class="form-control" [(ngModel)]="student.role">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Email address</label>
+                                            <input type="email" class="form-control" [(ngModel)]="student.email">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Fist Name</label>
+                                            <input type="text" class="form-control" [(ngModel)]="student.firstName">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Last Name</label>
+                                            <input type="text" class="form-control" [(ngModel)]="student.lastName">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Address</label>
+                                            <input type="text" class="form-control" [(ngModel)]="student.address">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">City</label>
+                                            <input type="text" class="form-control" [(ngModel)]="student.city">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Country</label>
+                                            <input type="text" class="form-control" [(ngModel)]="student.country">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Postal Code</label>
+                                            <input type="text" class="form-control" [(ngModel)]="student.postalCode">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>About Me</label>
+                                            <div class="form-group">
+                                                <!-- <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label> -->
+                                                <textarea class="form-control" rows="5" [(ngModel)]="student.aboutMe"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary pull-right" (click)="updateProfile()">Update Profile</button>
+                                <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-profile"  *ngIf="student">
+            
+                        <div class="card-body">
+                                
+
+                            <h6 class="card-category text-gray">{{student.role}}</h6>
+                            <h4 class="card-title">{{student.firstName}} {{student.lastName}}</h4>
+                            <p class="card-description">
+                               {{student.aboutMe}}
+                            </p>
+                            <a  class="btn btn-primary btn-round" (click)="logOut()">logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <footer class="footer ">
+        <div class="container-fluid">
+            <nav class="pull-left">
+                <ul>
+                    <li>
+                        <a href="https://www.creative-tim.com">
+                            Creative Tim
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://presentation.creative-tim.com">
+                            About Us
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://blog.creative-tim.com">
+                            Blog
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.creative-tim.com/license">
+                            Licenses
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="copyright pull-right">
+                &copy;
+                <script>
+                    document.write(new Date().getFullYear())
+                </script>, made with love by
+                <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+            </div>
+        </div>
+    </footer> -->
+</div>

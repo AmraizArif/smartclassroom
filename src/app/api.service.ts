@@ -1,13 +1,21 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase';
+
 @Injectable()
 export class ApiService {
 admin;
 adminId;
+student;
+studentId;
+
+
+
   constructor(private afs:AngularFirestore,private fbAuth:AngularFireAuth) { 
     console.log(localStorage.getItem('uid'));
-    this.adminId =localStorage.getItem('uid')
+    this.adminId =localStorage.getItem('uid');
+    this.studentId=localStorage.getItem('uid');
     
   
   }
@@ -27,7 +35,37 @@ adminId;
     return this.fbAuth.auth.createUserWithEmailAndPassword(email, pass);
   }
 
+  resetPassword(email: string) {
+    var auth = firebase.auth();
+    return auth.sendPasswordResetEmail(email)
+      .then(() => console.log("email sent"))
+      .catch((error) => console.log(error))
+  }
 
+
+
+
+  //Student Auth Details 
+  loginStudent(email, pass){
+    return this.fbAuth.auth.signInWithEmailAndPassword(email,pass);
+  }
+
+
+  //~ SIGNUP
+  signupStudent(email, pass){
+    return this.fbAuth.auth.createUserWithEmailAndPassword(email, pass);
+  }
+  addStudentProfile(id, data){
+    return this.afs.doc('students/'+id).set(data);
+  }
+  getStudentProfile(id){
+    return this.afs.doc('students/'+id).valueChanges();
+
+  }
+
+  updateStudentProfile(id,data){
+    return this.afs.doc('students/'+id).update(data);
+  }
 
 /* :::::::::::::::::::::::::::::::::::::::: TEACHER  :::::::::::::::::::::::::::::::::::: */
 
@@ -46,6 +84,38 @@ adminId;
 getTeachers(){
   return this.afs.collection('teachers').snapshotChanges();
 }
+
+
+
+
+//////Student Classs Enrolement and Get///////////
+
+
+
+
+
+enrollStudent(classId,uid){
+  return this.afs.collection('classes').doc(classId).update({
+    "students":
+      firebase.    firestore.FieldValue.arrayUnion(this.studentId)
+    
+    //students : this.studentId
+  }
+  )
+}
+
+
+getStudentClasses(studentId){
+ return this.afs.collection('classes',ref=> ref.where('students','array-contains',studentId)).snapshotChanges();
+ 
+}
+
+getStudentClass(classId){
+  return this.afs.doc('classes/'+classId).valueChanges();
+}
+
+
+
 /* ::::::::::::::::::::::::::::: CLASSES  :::::::::::::::::::::::::::::::::::: */
  
 //~ CREATE 
@@ -97,8 +167,66 @@ deleteAssigment(id){
 }
 
 
+//Reading Material Read and Create
+addMaterial(data){
+  return this.afs.collection('readingmaterial').add(data);
+}
+
+getallMaterial(){
+  return this.afs.collection('readingmaterial').snapshotChanges;
+}
+
+getspecificMaterial(classId){
+  return this.afs.collection('readingmaterial', ref=> ref.where('classId','==',classId)).snapshotChanges();
+}
+
+getMat(id){
+  return this.afs.doc('readingmaterial/'+id).snapshotChanges();
+}
+//~ UPDATE 
+updateMaterial(id,data){
+  return this.afs.doc('readingmaterial/'+id).update(data);
+}
+//~ DELETE 
+deleteMAterial(id){
+  return this.afs.doc('readingmaterial/'+id).delete();
+}
 
 
+//Notification crud and toasts
+addNotification(data){
+  return this.afs.collection('notification').add(data);
+}
+
+getAllNotifications(){
+  return this.afs.collection('notification').snapshotChanges();
+}
+getNotifications(classId){
+  return this.afs.collection('notification', ref=> ref.where('classId','==',classId)).snapshotChanges();
+}
+
+getNotification(id){
+  return this.afs.doc('notification/'+id).snapshotChanges();
+}
+
+updateNotification(id,data){
+  return this.afs.doc('notification/'+id).update(data);
+}
+
+deleteNotification(id){
+  return this.afs.doc('notification/'+id).delete();
+}
+
+//DISCUSSION PANEL BACKEND CODE
+//Post
+addQuestion(data){
+  return this.afs.collection('discussion').add(data);
+}
+
+//Read
+getAllQuestions(classId){
+  return this.afs.collection('discussion', ref=> ref.where('classId','==',classId)).snapshotChanges();
+}
 
 
 /* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: QUIZES  ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */

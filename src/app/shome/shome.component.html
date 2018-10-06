@@ -1,0 +1,82 @@
+  <!-- Navbar -->
+  <div class="main-panel">
+      <app-studentheader></app-studentheader>
+        <!-- End Navbar -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card card-stats">
+                            <div class="card-header card-header-warning card-header-icon">
+                                <div class="card-icon">
+                                    <i class="material-icons">local_pharmacy</i>
+                                </div>
+                                <p class="card-category">Classes</p>
+                                <h3 class="card-title" *ngIf="Classes">{{Classes}}
+                                    
+                                </h3>
+                            </div>
+                            <div class="card-footer">
+                                <div class="stats">
+                                    <i class="material-icons text-danger">warning</i>
+                                    <a routerLink="/dashboard/classes">Generate more...</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card card-stats">
+                            <div class="card-header card-header-success card-header-icon">
+                                <div class="card-icon">
+                                    <i class="material-icons">local_hospital</i>
+                                    <!-- <i class="fa fa-user-md"></i> -->
+      
+                                </div>
+                                <p class="card-category">Quizes</p>
+                                <h3 class="card-title" *ngIf="doctors">{{doctors}}</h3>
+                            </div>
+                            <div class="card-footer">
+                                <div class="stats">
+                                    <i class="material-icons">date_range</i> Last 24 Hours
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card card-stats">
+                            <div class="card-header card-header-danger card-header-icon">
+                                <div class="card-icon">
+                                    <i class="material-icons">wc</i>
+                                </div>
+                                <p class="card-category">Students</p>
+                                <h3 class="card-title" *ngIf="guardians && children">{{guardians}} / {{children}}</h3>
+                            </div>
+                            <div class="card-footer">
+                                <div class="stats">
+                                    <i class="material-icons">local_offer</i> Tracked from Database
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card card-stats">
+                            <div class="card-header card-header-info card-header-icon">
+                                <div class="card-icon">
+                                      <i class="material-icons">nature_people</i>
+                                  </div>
+                                <p class="card-category">Assignments</p>
+                                <h3 class="card-title" *ngIf="assignment">{{assignment}}</h3>
+                            </div>
+                            <div class="card-footer">
+                                <div class="stats">
+                                    <i class="material-icons">update</i> Just Updated
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+      
+      </div>

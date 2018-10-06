@@ -16,7 +16,7 @@
                     <!-- <form class="form" method="" action=""> -->
                         <div class="card-header card-header-primary text-center">
                             <h4>Login </h4>
-                            <div class="social-line">
+                            <!--<div class="social-line">
                                 <a href="#pablo" class="btn btn-primary btn-just-icon">
                                     <i class="fa fa-facebook-square"></i>
                                 </a>
@@ -27,7 +27,8 @@
                                     <i class="fa fa-google-plus"></i>
                                 </a>
                             </div>
-                            <p class="text-center" routerLink="/signup"> or <u>Join us </u></p>
+                        -->
+                            <p class="text-center" routerLink="/signup"> or <u>Register </u></p>
                         </div>
                         <p class="text-divider text-center alert alert-danger" *ngIf="error">ERROR:{{error}}</p>
                         <div class="card-body">
@@ -74,6 +75,11 @@
                         </div>
 
 
+                        <div>
+                                <p class="text-center" (click)="resetPassword(user.email)"> <u>Reset Password </u></p>
+                                
+                        </div>
+
                             <!-- If you want to add a checkbox to this form, uncomment this code
 
       <div class="form-check">
@@ -87,7 +93,7 @@
       </div> -->
                         </div>
                         <div class="card-footer justify-content-center">
-                            <button class="btn btn-primary btn-lg" (click)="login()">Get Started</button>
+                            <button class="btn btn-primary btn-lg" (click)="login()">Login</button>
                         </div>
                     <!-- </form> -->
                 </div>
