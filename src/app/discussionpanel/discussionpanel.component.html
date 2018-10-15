@@ -7,7 +7,7 @@
        
           
           
-      <!-- READ ASSIGNMENTS -->
+      <!-- READ QUESTIONS -->
       <div class="col-md-12">
       <div class="container" id="multiCollapseExample1">
        
@@ -25,44 +25,41 @@
                       
                       <table class="table"> 
                           <thead class=" text-primary">
-                              <th (click)="orderBy('courseName')">
+                              <th (click)="orderBy('note')">
                                   Question #
-                                  <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                                  <i *ngIf="order == 'note'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
                               </th>
                               
-                              <th (click)="orderBy('courseId')">
+                              <th (click)="orderBy('note')">
                                 Context
-                                <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                                <i *ngIf="order == 'note'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
                               </th>
                               <th>
                                 Votes
                               </th>
+                              <th>
+                                  Actions
+                                </th>
                              
   
                           </thead>
-                          <tbody *ngIf="assigments">
-                              <tr *ngFor="let x of assigments">
+                          <tbody *ngIf="questions">
+                              <tr *ngFor="let x of questions">
                                   <td class="small">
-                                    {{x?.num}}
+                                    {{x?.qid}}
                                   </td>
                                   <td class="small">
-                                    {{x?.deadline}}
+                                    {{x?.note}}
                                   </td>
                                   <td class="small">
-                                    <img src="{{x?.urlnew}}" width="50" height="50"  name="link"> 
+                                    {{x?.votes}}
                                   </td>
-                                  <td class="small">
-                                      
-                                          <span class="badge badge-warning" *ngIf="x.status == 'active'">Active</span>
-                                          <span class="badge badge-success" *ngIf="x.status == 'completed'">Completed</span>
-                                          <span class="badge badge-danger" *ngIf="x.status == 'cancel'">Cancel</span>
-                       
-                                  </td>
+                                 
                                    <td>
   
-                                      <span class="btn btn-sm btn-danger" (click)="selectedAssignment = x" data-toggle="modal" data-target="#deleteAssignmentModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
-                                      <span class="btn btn-sm btn-warning" (click)="selectedAssignment = x" data-toggle="modal" data-target="#editAssignmentModal" > <i class="fa fa-edit" aria-hidden="true"></i></span> 
-                                      <span class="btn btn-sm btn-success" (click)="AssignmentDetails(x.id)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
+                                      <span class="btn btn-sm btn-danger" (click)="selectedquestion = x" data-toggle="modal" data-target="#deleteModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
+                                      <span class="btn btn-sm btn-warning" (click)="selectedquestion = x" data-toggle="modal" data-target="#editQuestionModal" > <i class="fa fa-edit" aria-hidden="true"></i></span> 
+                                      <span class="btn btn-sm btn-success" (click)="details(x.qid)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
                                     </td>
                               </tr>
                           </tbody>
@@ -266,7 +263,26 @@
     </div>
     
  
-  
+<!-- Delete Assignment Modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+    <div class="modal-dialog modal-sm|lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="deleteModal">Confirm Delete</h4>
+        </div>
+        <div class="modal-body" *ngIf="selectedClass">
+         Are you sure you want to delete <span class="text-danger"> {{selectedquestion?.note}}</span> Question?       
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-danger" (click)="delete(selectedquestion)">Delete</button>
+        </div>
+      </div>
+    </div>
+    </div>
   
   
   

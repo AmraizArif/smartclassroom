@@ -53,9 +53,13 @@
                               <th>
                                 Note
                               </th>
+                              <th>
+                                  Students
+                              </th>
                                <th>
                                   Actions
                               </th>
+                            
 
                           </thead>
                           <tbody *ngIf="classes">
@@ -76,12 +80,13 @@
                                   <td>
                                       {{x?.room}}
                                   </td>
-                                  <!-- <td>
-                                    {{x?.students.length}}
-                                  </td> -->
+                               
                                    <td>
                                       {{x?.note}}
                                    </td>
+                                      <td>
+                                     {{x?.students.length}}
+                                  </td>
                                    <td>
 
                                       <span class="btn btn-sm btn-danger" (click)="selectedClass = x" data-toggle="modal" data-target="#deleteModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 

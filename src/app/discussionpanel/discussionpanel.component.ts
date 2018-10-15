@@ -25,15 +25,31 @@ file;
 filePath;
 fileRef;
 task;
+id;
+qid=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+order: string = 'name';
 
   constructor(private api:ApiService, private route: ActivatedRoute,private router:Router,private storage:AngularFireStorage) { }
   uploadPercent: Observable<number>;
   downloadURL: Observable<string>;
   ngOnInit() {
+    
     let uid = localStorage.getItem('uid');
-    let id = this.route.snapshot.paramMap.get('id');
-    this.classId = id;
+   this.id = this.route.snapshot.paramMap.get('id');
+    this.classId = this.id;
     this.creatorid=uid;
+    this.api.getAllQuestions(this.classId).map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data()
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      })
+  
+    }).subscribe(resp=>{
+      this.questions =resp;
+    })
+    
+
   }
 
 
@@ -70,6 +86,7 @@ task;
 val.creatorid=this.creatorid;
     val.startDate = new Date().getUTCDate();
     val.classId = this.classId;
+    val.qid=this.qid;
 
     this.api.addQuestion(val).then(res=>{
 
@@ -79,22 +96,35 @@ val.creatorid=this.creatorid;
 
   }
 
-//Get Full Question List in a course
-getQuestions(){
-  this.api.getAllQuestions(this.classId).map(actions => {
-    return actions.map(a => {
-      const data = a.payload.doc.data()
-      const id = a.payload.doc.id;
-      return { id, ...data };
-    })
+//Deleete and edit question
+delete(data){
+  $('#deleteModal').modal('hide');
+  this.selectedquestion ={};
+  //now removing the class
+  this.api.deleteQuestion(data.id).then(res=>{
 
-  }).subscribe(resp=>{
-    this.questions =resp;
-  })
+  }, err=>{})
+}
+
+update(data){
+  $('#editModal').modal('hide');
+  this.api.updateClass(data.id, data).then(res=>{
+
+    this.selectedquestion ={};
+  });
+}
+
+//Question Thread
+details(c){
+  console.log(c);
+  //this.router.navigate([`/dashboard/classes/${c.id}`]);
+  this.router.navigate([`/dashboard/discussion/question/${c}`]);
 }
 
 
-
+orderBy(value){
+  this.order = value;
+}
 
 
 }

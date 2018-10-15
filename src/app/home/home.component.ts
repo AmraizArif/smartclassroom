@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
    this.api.getClasses(localStorage.getItem('uid')).subscribe(resp=>{
     this.Classes = resp.length;
+   
   });
   this.api.getAllAssigments().subscribe(respx=>{
      this.assignment =respx.length;

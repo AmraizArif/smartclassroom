@@ -217,16 +217,59 @@ deleteNotification(id){
   return this.afs.doc('notification/'+id).delete();
 }
 
-//DISCUSSION PANEL BACKEND CODE
-//Post
+/////////////////////////////////////////////DISCUSSION PANEL BACKEND CODE
+////Get question context
+getQuestion(qid){
+  return this.afs.collection('discussion', ref=> ref.where('qid','==',qid)).snapshotChanges();
+}
+
+
+
+//Post Question
 addQuestion(data){
   return this.afs.collection('discussion').add(data);
+}
+
+//Post Answer
+addAnswer(data){
+  return this.afs.collection('answer').add(data);
+}
+
+
+//Read Answers
+getAllAnswers(qid){
+  return this.afs.collection('answer', ref=> ref.where('qid','==',qid)).snapshotChanges();
 }
 
 //Read
 getAllQuestions(classId){
   return this.afs.collection('discussion', ref=> ref.where('classId','==',classId)).snapshotChanges();
 }
+
+
+//Delete Question
+
+deleteQuestion(id){
+  return this.afs.doc('discussion/'+id).delete();
+}
+
+
+
+/* :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::DASH FUNCTIONS:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+
+
+//Count Students
+countStudents(teacherId){
+  return this.afs.collection('classes', ref=> ref.where('teacherId','==',teacherId)).snapshotChanges();
+}
+
+
+
+
+
+//Show Students
+
+
 
 
 /* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: QUIZES  ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */

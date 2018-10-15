@@ -1,0 +1,32 @@
+<div class="main-panel">
+  <!-- <app-header></app-header> -->
+  <div>  
+<div class="mydiv" style="padding:30px;border:2px;border-style: solid">
+<h2 style="color:#9c27b0" *ngFor="let quest of question">QUESTION:  {{quest.note}}</h2> <br>
+
+<!-- <label style="color:#9c27b0">COURSE ID:  {{classId}}</label><br>
+<label style="color:#9c27b0">Room:  {{class?.room}}</label><br>
+<label style="color:#9c27b0">Id: {{class?.courseId}}</label><br>
+<label style="color:#9c27b0">Students: {{class?.students.length}}</label><br>
+<label>QR CODE</label><br>
+<qrcode [qrdata]="classId"  colordark="#A23DB7" [size]="128" [level]="'L'"></qrcode> -->
+
+</div>
+
+  <div class="card" style="width: 58rem;" *ngFor="let answer of Answers">
+      <div class="card-body">
+        <h5 class="card-title">{{answer.answer}}</h5>
+       
+        <button type="button" class="btn btn-success">CORRECT</button>
+        <button type="button" class="btn btn-danger" id="wrn">WRONG</button>
+      </div>
+    </div>
+    
+    <div class="form-group" id="ansbox" >
+        <form #addAnswerForm="ngForm" (submit)="submitAnswer(addAnswerForm.value)">
+      <strong><label for="exampleFormControlTextarea2">Answer</label></strong>
+      <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" name="answer" ngModel></textarea>
+      </form>
+      <button (click)="submitAnswer(addAnswerForm.value)">SUBMIT</button>
+  </div>
+    </div>

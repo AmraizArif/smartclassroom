@@ -53,6 +53,7 @@ import { DiscussionpanelComponent } from './discussionpanel/discussionpanel.comp
 import{QrcodereaderService} from './qrcodereader.service';
 import { StudentheaderComponent } from './studentheader/studentheader.component';
 import { StudentprofileComponent } from './studentprofile/studentprofile.component';
+import { QuestionpanelComponent } from './questionpanel/questionpanel.component';
 
 
 
@@ -88,6 +89,8 @@ let ROUTES =[
     { path: 'help', component: HelpComponent},
     { path: 'cpanel/:id', component: CoursepanelComponent},
     { path: 'discussion/:id' ,component:DiscussionpanelComponent},
+    {path:'discussion/question/:c',component:QuestionpanelComponent}
+    
     
 ]},
   
@@ -136,7 +139,8 @@ let firebaseConfig= {
     StudentclassComponent,
     DiscussionpanelComponent,
     StudentheaderComponent,
-    StudentprofileComponent
+    StudentprofileComponent,
+    QuestionpanelComponent
   ],
   imports: [
     BrowserModule,
