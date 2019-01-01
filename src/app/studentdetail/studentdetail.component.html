@@ -1,0 +1,126 @@
+<div class="main-panel" style="padding-right:2%">
+  <app-header></app-header>
+<div class="mydiv card " style="padding:20px;border:2px;border-style: rounded">
+<u><h3 style="color:#9c27b0">COURSE NAME:  {{class?.courseName}}</h3></u> <br>
+<!-- <label style="color:#9c27b0">COURSE ID:  {{classId}}</label><br> -->
+<!-- <label style="color:#9c27b0">Room:  {{class?.room}}</label><br>
+<label style="color:#9c27b0">Id: {{class?.courseId}}</label><br>
+<label style="color:#9c27b0">Students: {{class?.students.length}}</label><br> -->
+<!-- <button style="color:#9c27b0" (click)="details(classId)">MESSSAGE TEACHER</button><br> -->
+<!-- <label>QR CODE</label><br>
+<qrcode [qrdata]="classId"  colordark="#A23DB7" [size]="128" [level]="'L'"></qrcode> -->
+
+</div>
+  
+    
+    <div class="col-md-12" style="padding:20px;border:2px;border-style: rounded">
+      <div class="container" id="multiCollapseExample1">
+       
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title text-center ">STUDENTS LIST             
+                        <!-- <div class="pull-right btn btn-warning" data-toggle="modal" role="dialog" data-target="#addAssignmentModal" data-backdrop="static" date-keyboard="false" data-focus="true" #tref><i class="fa fa-plus" aria-hidden="true"></i> ASK QUESTION</div> -->
+                    </h4>
+                    <p class="card-category"> Send Alerts </p>
+                    
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                      
+  
+                      
+                      <table class="table"> 
+                          <thead class=" text-primary">
+                              <th (click)="orderBy('note')">
+                                  Student Name
+                                  <i *ngIf="order == 'note'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                              </th>
+                              
+                              <th (click)="orderBy('note')">
+                                Roll Number
+                                <i *ngIf="order == 'note'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                              </th>
+                              <th>
+                                Email
+                              </th>
+                             
+                                <th>
+                                  Actions
+                                </th>
+                             
+  
+                          </thead>
+                          
+                              <tr *ngFor="let x of student" >
+                                  <td class="small"  >
+                                    {{x?.firstName }}
+                                  </td>
+                                  <td class="small" >
+                                    {{x?.rollno}}
+                                  </td>
+                                  <td class="small" >
+                                    {{x?.email}}
+                                  </td>
+                                
+                                 
+                                   <td > 
+  
+                                      <!-- <span class="btn btn-sm btn-danger" (click)="selectedquestion = x" data-toggle="modal" data-target="#deleteModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
+                                      <span class="btn btn-sm btn-warning" (click)="selectedquestion = x" data-toggle="modal" data-target="#editQuestionModal" > <i class="fa fa-edit" aria-hidden="true"></i></span>  -->
+                                      <span class="btn btn-sm btn-success" (click)="selectedstudent=x" data-toggle="modal" data-target="#addNotificationModal"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
+                                    </td>
+                              </tr>
+                          </tbody>
+                      </table>                   </div>
+                </div>
+            </div>
+        </div>
+  
+  
+
+        <div class="modal fade" id="addNotificationModal" tabindex="-1" role="dialog" aria-labelledby="addNotificationModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="addNotificationModalLabel">SEND ALERT</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="container">
+                    <form #addNotificationForm="ngForm" (submit)="submitAlert(addNotificationForm.value)">
+                        <div class="row">
+                  <div class="col-md-12 form-group">
+                    <label for=""></label>
+                    <input type="text"
+                      class="form-control" name="id" placeholder="Title" ngModel>
+                  </div>
+                  
+                              
+                          <div class="col-md-12 form-group">
+                              <!-- <label for="">Description</label> -->
+                              <textarea class="form-control" name="description"  rows="3" placeholder=" Description.." ngModel></textarea>
+                            </div>
+                            
+                            <div class="col-md-6 form-group">
+                              <!-- <label for="">Deadline</label> -->
+                              <input type="date"
+                                class="form-control" name="deadline" aria-describedby="helpId" placeholder="Deadline" ngModel>
+                            </div>
+                        
+                             
+                
+                        </div>
+                </form>
+                
+                </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" (click)="submitAlert(addNotificationForm.value)" >SEND</button>
+                </div>
+              </div>
+            </div>
+          </div>
+

@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 
 
-
+declare var jquery:any;
+declare var $ :any;
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -26,6 +27,13 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+
+  resetPass(email){
+  $('resetPass').modal('hide');
+      this.api.resetPassword(email);
+    
+  }
+  
   updateProfile(){
     this.api.updateTeacherProfile(this.api.adminId, this.admin).then(resp=>{
       console.log('Teacher Updated');

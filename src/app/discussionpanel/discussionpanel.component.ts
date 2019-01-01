@@ -47,6 +47,7 @@ order: string = 'name';
   
     }).subscribe(resp=>{
       this.questions =resp;
+      
     })
     
 
@@ -113,6 +114,14 @@ update(data){
     this.selectedquestion ={};
   });
 }
+updateQuestion(data){
+  $('#editQuestionModal').modal('hide');
+  this.api.updateQuestion(data.id, data).then(res=>{
+
+    this.selectedquestion ={};
+  });
+}
+
 
 //Question Thread
 details(c){

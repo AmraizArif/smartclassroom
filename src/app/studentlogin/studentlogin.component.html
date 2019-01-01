@@ -11,7 +11,7 @@
 <div class="section section-signup page-header" style="background-image: url('http://backgroundcheckall.com/wp-content/uploads/2017/12/software-company-background-images-4.jpg');padding:120px;">
   <div class="container">
       <div class="row">
-          <div class="col-md-4 ml-auto mr-auto">
+          <div class="col-md-8 ml-auto mr-auto">
               <div class="card card-signup">
                   <!-- <form class="form" method="" action=""> -->
                       <div class="card-header card-header-primary text-center">
@@ -76,7 +76,7 @@
 
 
                       <div>
-                              <p class="text-center" (click)="resetPassword(user.email)"> <u>Reset Password </u></p>
+                              <p class="text-center" data-toggle="modal" data-target="#resetModal" > <u>Reset Password </u></p>
                               
                       </div>
 
@@ -101,3 +101,24 @@
       </div>
   </div>
 </div>
+
+<!---RESEt MODAL-->
+<div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="resetModal" aria-hidden="true">
+    <div class="modal-dialog modal-sm|lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="resetModal">Reset Password</h4>
+        </div>
+        <div class="modal-body" *ngIf="user.email">
+         Are you sure you want to reset password for<span class="text-danger">  {{ user.email}}</span> ?       
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-danger" (click)="resetPassword(user.email)"  >Yes</button>
+        </div>
+      </div>
+    </div>
+    </div>

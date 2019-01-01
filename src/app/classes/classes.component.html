@@ -10,26 +10,26 @@
       <div class="col-md-12">
           <div class="card">
               <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Classes                
-                      <div class="pull-right btn btn-warning" data-toggle="modal" role="dialog" data-target="#exampleModal" data-backdrop="static" date-keyboard="false" data-focus="true" #tref><i class="fa fa-plus" aria-hidden="true"></i> ADD</div>
+                  <h4 class="card-title ">COURSES               
+                      <div class="pull-right btn btn-warning" data-toggle="modal" role="dialog" data-target="#exampleModal" data-backdrop="static" date-keyboard="false" data-focus="true" #tref><i class="fa fa-plus" aria-hidden="true"></i> ADD COURSE</div>
                   </h4>
-                  <p class="card-category"> Your class schedule or taken </p>
+                  
               </div>
               <div class="card-body">
                   <div class="table-responsive">
-                    <div class="input-group">
+                    <!-- <div class="input-group">
                       <span class="input-group-btn">
                         <a class="btn btn-secondary" type="button" aria-label=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
                       </span>
                       <input type="search" class="form-control" name="name" id="name" placeholder="Search..." aria-label="" [(ngModel)]="term">
-                    </div>
+                    </div> -->
 
                     
                       <table class="table">
                           <thead class=" text-primary">
-                              <th>
+                              <!-- <th>
                                  Class ID
-                              </th>
+                              </th> -->
                               <th>
                                 QR
                              </th>
@@ -45,7 +45,7 @@
                               <th (click)="orderBy('room')">
                                   Room No
                                   <i *ngIf="order == 'room'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
-                              </th>
+                              </th><th>Status</th>
                               <!-- <th (click)="orderBy('dosage')">
                                   Students
                                   <i *ngIf="order == 'dosage'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
@@ -53,9 +53,7 @@
                               <th>
                                 Note
                               </th>
-                              <th>
-                                  Students
-                              </th>
+                             
                                <th>
                                   Actions
                               </th>
@@ -64,30 +62,34 @@
                           </thead>
                           <tbody *ngIf="classes">
                               <tr *ngFor="let x of classes | filter:term | orderBy: order" >
-                                  <td>
+                                  <!-- <td>
                                     {{x?.id}}
-                                  </td>
-                                  <td>
-                                    <qrcode [qrdata]="x.id"  colordark="#A23DB7" [size]="128" [level]="'M'"></qrcode>
+                                  </td> -->
+                                  <td *ngIf="x.status == 'active'">
+                                  <button (click)="selectedQr = x" data-toggle="modal" role="dialog" data-target="#qrModal" data-backdrop="static" date-keyboard="false" data-focus="true" #tref> <qrcode [qrdata]="x.id"  colordark="#A23DB7" [size]="128" [level]="'M'"></qrcode></button> 
 
                                   </td>
-                                  <td>
-                                    {{x?.courseName}}
+                                  <td *ngIf="x.status == 'active'">
+                                   <strong>{{x?.courseName}}</strong> 
                                   </td>
-                                  <td>
-                                      {{x?.courseId}}
+                                  <td *ngIf="x.status == 'active'">
+                                     <strong>{{x?.courseId}}</strong> 
                                   </td>
-                                  <td>
-                                      {{x?.room}}
+                                  <td *ngIf="x.status == 'active'"> 
+                                     <strong>{{x?.room}}</strong> 
                                   </td>
-                               
-                                   <td>
-                                      {{x?.note}}
+                                  <td class="small" *ngIf="x.status == 'active'">
+                                    
+                                    <span class="badge badge-warning" *ngIf="x.status == 'active'">Active</span>
+                                    <span class="badge badge-success" *ngIf="x.status == 'completed'">Completed</span>
+                                    <span class="badge badge-danger" *ngIf="x.status == 'cancel'">Cancel</span>
+                 
+                            </td>
+                                   <td *ngIf="x.status == 'active'">
+                                      <strong>{{x?.note}}</strong>
                                    </td>
-                                      <td>
-                                     {{x?.students.length}}
-                                  </td>
-                                   <td>
+                                     
+                                   <td *ngIf="x.status == 'active'">
 
                                       <span class="btn btn-sm btn-danger" (click)="selectedClass = x" data-toggle="modal" data-target="#deleteModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
                                       <span class="btn btn-sm btn-warning" (click)="selectedClass = x" data-toggle="modal" data-target="#editModal" > <i class="fa fa-edit" aria-hidden="true"></i></span> 
@@ -157,9 +159,18 @@
             <input type="text"
               class="form-control" name="room" id="textbox" aria-describedby="helpId" placeholder="ROOM NO" ngModel required>
           </div>
+
+          <div class="col-md-6 form-group">
+            <label for="">Status</label>
+            <select class="form-control" name="status" ngModel>
+              <option value="active">Current</option>
+              <option value="completed">Expired</option>
+              <option value="cancel">Future</option>
+            </select>
+        </div>
    
                   <div class="col-md-12 form-group">
-                    <label for="">Note</label>
+                    <!-- <label for="">Note</label> -->
                     <textarea class="form-control" name="note" id="" rows="3" placeholder="Extra Note.." ngModel required></textarea>
                   </div>
               </div>
@@ -206,12 +217,20 @@
                   class="form-control" name="courseId" id="" aria-describedby="helpId" placeholder="Course ID"  [(ngModel)]="selectedClass.courseId">
               </div>
               <div class="col-md-6 form-group">
+                <label for="">Status</label>
+                <select class="form-control" name="status" [(ngModel)]="selectedClass.status">
+                  <option value="active">Current</option>
+                  <option value="completed">Expired</option>
+                  <option value="cancel">Future</option>
+                </select>
+            </div>
+              <div class="col-md-6 form-group">
                   <label for=""></label>
                   <input type="text"
                     class="form-control" name="room" id="" aria-describedby="helpId" placeholder="Room No"  [(ngModel)]="selectedClass.room">
                 </div>
                       <div class="col-md-12 form-group">
-                        <label for="">Note</label>
+                        <label for=""></label>
                         <textarea class="form-control" name="note" id="" rows="3" placeholder="Extra Note.."  [(ngModel)]="selectedClass.note"></textarea>
                       </div>
                   </div>
@@ -225,3 +244,30 @@
         </div>
       </div>
     </div>
+
+
+
+    <!--QR CODE MODAL-->
+    <div class="modal fade" id="qrModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">QR CODE</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container" *ngIf="selectedQr">
+             
+              <qrcode [qrdata]="selectedQr.id"  colordark="#A23DB7" [size]="256" [level]="'L'"></qrcode>
+          </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="selectedQr =null">Close</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    

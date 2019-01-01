@@ -23,24 +23,18 @@ export class ScpanelComponent implements OnInit {
   selectedQuiz;
   alerts=[];
   curval;
+  tid;
+  time;
+  teacher:any=[];
+  start=0.00
+  end=1.00
   constructor(private api:ApiService, private route: ActivatedRoute,private router:Router,private toastrService: ToastrService) {
    
   //  this.Alert
   let id = this.route.snapshot.paramMap.get('id');
   this.classId = id;
   this.getStudentClass(id);
-  this.api.getNotifications(this.classId).map(actions => {
-    return actions.map(a => {
-      const data = a.payload.doc.data()
-      const id = a.payload.doc.id;
-      return { id, ...data };
-    })
-  }).subscribe(resp=>{
-    console.log(resp);
-    this.alerts =resp;
-    console.log(this.alerts);
-   // console.log(this.alerts.length);
-  })
+  
  
   
   console.log(id)
@@ -51,26 +45,43 @@ export class ScpanelComponent implements OnInit {
   
 
   ngOnInit() {
-   
+    let d=new Date();
+    let h=d.getHours();
+    let m=d.getMinutes();
+    this.time=h+'.'+m;
+  
+
+    console.log(this.time)
     // this.curval=this.alerts[this.alerts.length-1].description;
     // console.log("this.curval");
 
-    $( document ).hover(function() {
-      $('#btn123').trigger('click');
-  });
+  //   $( document ).hover(function() {
+  //     $('#btn123').trigger('click');
+  // });
+  this.api.getNotifications(this.classId).map(actions => {
+    return actions.map(a => {
+      const data = a.payload.doc.data()
+      const id = a.payload.doc.id;
+      return { id, ...data };
+    })
+  }).subscribe(resp=>{
+    console.log(resp);
+    this.alerts =resp;
+    console.log(this.alerts);
+    this.toastrService.info(this.alerts[this.alerts.length-1].description);
+   // console.log(this.alerts.length);
+  })
+  
   }
 
-  Alert(){
-    //stuff that doesn't do view changes
-    this.toastrService.info(this.alerts[this.alerts.length-1].description);
-  }
+  
   
 
   showSuccess() {
     //this.toastr.success('New Notification', 'Success!');
     this.toastrService.info(this.alerts[this.alerts.length-1].description);
   }
-
+ 
 
   
 
@@ -78,9 +89,27 @@ export class ScpanelComponent implements OnInit {
   getStudentClass(id){
     this.api.getStudentClass(id).subscribe(res=>{
       this.class =res;
-
+      this.api.getTeacherProfile(this.class.teacherId).subscribe(res=>{
+        this.teacher=res;
+        console.log(this.teacher);
+        this.start=this.teacher.startTime;
+        this.end=this.teacher.endTime;
+            })
     })
  }
+
+
+ 
+ details(c){
+   if(this.time>=this.start&&this.time<=this.end){
+  console.log(c);
+this.api.sendMsg(this.class.teacherId);
+  this.router.navigate([`/sdashboard/chat/${c}`]);}
+  else{
+    console.log("Error contact in office time");
+    this.toastrService.error("PLEASE CONTACT IN OFFICE HOURS",'OOPS!')
+  }
+}
 
 
  ndetail(c){
@@ -89,8 +118,19 @@ export class ScpanelComponent implements OnInit {
   //this.router.navigate([`/dashboard/cpanel/${c.id}`]);
 }
 
+mdetail(c){
+  console.log(c);
+  this.router.navigate([`/sdashboard/sdiscussion/${c}`]);
+  //this.router.navigate([`/dashboard/cpanel/${c.id}`]);
+}
 
 
+
+qdetail(c){
+  console.log(c);
+  this.router.navigate([`/sdashboard/quiz/${c}`]);
+  //this.router.navigate([`/dashboard/cpanel/${c.id}`]);
+}
 //Get Course Notifications For Toast
 
 

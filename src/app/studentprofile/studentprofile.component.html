@@ -46,6 +46,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Roll No</label>
+                                        <input type="text" class="form-control" [(ngModel)]="student.rollno">
+                                    
+                                </div>
+                            </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -85,6 +92,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <button class="btn btn-primary pull-left" data-toggle="modal" data-target="#resetModal">Reset Password</button>
                                 <button class="btn btn-primary pull-right" (click)="updateProfile()">Update Profile</button>
                                 <div class="clearfix"></div>
                         </div>
@@ -103,6 +111,21 @@
                             </p>
                             <a  class="btn btn-primary btn-round" (click)="logOut()">logout</a>
                         </div>
+                    </div>
+
+                    <div class="card card-profile" *ngIf="student">
+
+<div class="card-body">
+<img src="assets/lev1.png" alt="" *ngIf="student.val==10">
+<img src="assets/lev2.png" alt="" *ngIf="student.val==20">
+<img src="assets/lev3.png" alt="" *ngIf="student.val==30">
+<img src="assets/lev4.png" alt="" *ngIf="student.val==40">
+<h2>{{badge}}</h2>
+
+
+</div>
+
+
                     </div>
                 </div>
             </div>
@@ -144,3 +167,24 @@
         </div>
     </footer> -->
 </div>
+
+<!---RESEt MODAL-->
+<div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="resetModal" aria-hidden="true">
+    <div class="modal-dialog modal-sm|lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="resetModal">Reset Password</h4>
+        </div>
+        <div class="modal-body" *ngIf="student">
+         Are you sure you want to reset password for<span class="text-danger">  {{ student?.email}}</span> ?       
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-danger" (click)="resetPass(student.email)"  >Yes</button>
+        </div>
+      </div>
+    </div>
+    </div>

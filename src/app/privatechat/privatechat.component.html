@@ -1,0 +1,46 @@
+<div class="main-panel" style="padding:2%;">
+
+<div id="fst" class="jumbotron jumbotron-fluid ">
+    <div class="container card" style="border:2px;border-style: rounded;background-color: blueviolet;color: white">
+    <h3>INSTRUCTOR PROFILE</h3>
+   
+    
+    <strong><label style="color:white">NAME ::{{teacher.firstName}}&nbsp;{{teacher.lastName}}</label></strong><br>
+    <!-- <strong><label>COURSE NAME :{{class.courseName}}</label></strong><br> -->
+    <strong><label style="color:white">TIME ALLOWED: &nbsp;&nbsp;{{teacher?.startTime}}:&nbsp;to:&nbsp;{{teacher?.endTime}} </label></strong>
+    <!-- <strong><label > TIME::{{Message.message}}</label></strong> -->
+    </div>
+    </div>
+    <div class="jumbotron-fluid" id="chatcontainer" style="padding:2px" >
+
+
+      <!-- <div style="color:brown;border-style:dotted;border-color: blue !important"   *ngFor="let message of Dmsg">
+        {{message}}
+      </div>
+      <!-- <div style="color:brown !important" *ngFor="let dis of disc">{{dis.message}}</div> -->
+      <!-- <div>Yes student</div> -->
+      <div class="container card" *ngFor="let message of Dmsg" style="width:auto">
+        <img src="/assets/student.jpg" alt="Avatar">
+        <p>{{message}}</p>
+       
+      </div>
+      <div class="container card" *ngFor="let message of Tmsg" style="width:auto">
+        <img src="/assets/teac.png" alt="Avatar">
+        <p>{{message}}</p>
+       
+      </div>
+      <div class="form-group  card" id="ansbox" style="width:auto" >
+        <form #addAnswerForm="ngForm" (submit)="submitReply(addAnswerForm.value)">
+      <strong><label for="exampleFormControlTextarea2">Reply</label></strong>
+      <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" name="message" ngModel></textarea>
+      </form>
+      <button (click)="submitReply(addAnswerForm.value)">SEND</button>
+  </div>
+
+    </div>
+      
+
+
+
+
+</div>

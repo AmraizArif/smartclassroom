@@ -34,9 +34,8 @@
                                 Context
                                 <i *ngIf="order == 'note'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
                               </th>
-                              <th>
-                                Votes
-                              </th>
+                              <th></th>
+                        <th></th>
                               <th>
                                   Actions
                                 </th>
@@ -51,10 +50,8 @@
                                   <td class="small">
                                     {{x?.note}}
                                   </td>
-                                  <td class="small">
-                                    {{x?.votes}}
-                                  </td>
-                                 
+                                 <td></td>
+                                 <td></td>
                                    <td>
   
                                       <span class="btn btn-sm btn-danger" (click)="selectedquestion = x" data-toggle="modal" data-target="#deleteModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
@@ -176,7 +173,7 @@
   
     <!-- :::::::::::::: ASSIGNMENTs ::::::::::: -->
   
-    <!--ADD ASSIGNMENT -->
+    <!--ADD QUESTION -->
     <div class="modal fade" id="addAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="addAssignmentModal" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -193,15 +190,15 @@
            
         
                     <div class="col-md-12 form-group">
-                      <label for=""><strong>Question</strong></label>
+                      <!-- <label for=""><strong>Question</strong></label> -->
                         <textarea class="form-control" name="note"  rows="5" placeholder=" Write Question Here" ngModel></textarea>
                       </div>
                       
-                      <input type="file" (change)="uploadFile($event)" />
+                      <!-- <input type="file" (change)="uploadFile($event)" />
                       <div>{{ uploadPercent | async }}</div>
                       <a [href]="downloadURL "  name ="downloadURL" >{{ downloadURL }}</a>
                        
-                        <img [src]="downloadURL" [alt]="downloadURL" width="50" height="50"  name="link">
+                        <img [src]="downloadURL" [alt]="downloadURL" width="50" height="50"  name="link"> -->
           
                   </div>
           </form>
@@ -217,38 +214,23 @@
     </div>
   
   
-    <!--  EDIT ASSIGNMENT-->
-    <div class="modal fade" id="editAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="editAssignmentModal" aria-hidden="true">
+    <!--  EDIT QUIZ MODAL-->
+    <div class="modal fade" id="editQuestionModal" tabindex="-1" role="dialog" aria-labelledby="editQuestionModal" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="editModal">Edit Assignemnt</h5>
+            <h5 class="modal-title" id="editModal">Edit Question</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body" *ngIf="selectedAssignment">
+          <div class="modal-body" *ngIf="selectedquestion">
             <div class="container">
-              <form #assignmentUpdateForm="ngForm" (submit)="updateAssignment(selectedAssignment)">
+              <form #questionUpdateForm="ngForm" (submit)="updateQuestion(selectedquestion)">
                   <div class="row">
-            <div class="col-md-12 form-group">
-              <label for=""></label>
-              <input type="text"
-                class="form-control" name="title" id="" aria-describedby="helpId" placeholder="Assignment Title" [(ngModel)]="selectedAssignment.title">
-            </div>
-            <div class="col-md-6 form-group">
-                <label for=""></label>
-                <input type="number"
-                  class="form-control" name="num" id="" aria-describedby="helpId" placeholder="Assingment #"  [(ngModel)]="selectedAssignment.num">
-              </div>
-              <div class="col-md-6 form-group">
-                  <label for=""></label>
-                  <input type="text"
-                    class="form-control" name="deadline" id="" aria-describedby="helpId" placeholder="Deadline"  [(ngModel)]="selectedAssignment.deadline">
-                </div>
-                      <div class="col-md-12 form-group">
-                        <label for="">Note</label>
-                        <textarea class="form-control" name="note" id="" rows="3" placeholder="Extra Note.."  [(ngModel)]="selectedAssignment.note"></textarea>
+                    <div class="col-md-12 form-group">
+                      <!-- <label for=""><strong>Question</strong></label> -->
+                        <textarea class="form-control" name="note"  rows="5" placeholder=" Write Question Here" [(ngModel)]="selectedquestion.note"></textarea>
                       </div>
                   </div>
           </form>
@@ -256,14 +238,14 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" (click)="updateAssignment(selectedAssignment)" >Save changes</button>
+            <button type="button" class="btn btn-primary" (click)="updateQuestion(selectedquestion)" >Save changes</button>
           </div>
         </div>
       </div>
     </div>
     
  
-<!-- Delete Assignment Modal-->
+<!-- Delete Quiz Modal-->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
     <div class="modal-dialog modal-sm|lg" role="document">
       <div class="modal-content">

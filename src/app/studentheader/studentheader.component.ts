@@ -18,7 +18,21 @@ export class StudentheaderComponent implements OnInit {
   constructor(private api:ApiService) { }
 
   ngOnInit() {
+    this.api.getalerts(localStorage.getItem('uid')).subscribe(res=>{
+      this.notifications=res;
+      
+    })
     
   }
+
+  manageAlert(val){
+    console.log(val);
+    alert(val.description);
+    this.api.setSeen(localStorage.getItem('uid'),val).then(res=>{
+      this.api.removeLatest(localStorage.getItem('uid'),val);
+      console.log("snt in seen");
+    })
+  }
+
 
 }

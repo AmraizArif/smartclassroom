@@ -1,0 +1,278 @@
+
+
+<div class="main-panel">
+  <app-studentheader></app-studentheader>
+  <div class="content" >
+  <div class="container-fluid row">
+     
+        
+        
+    <!-- READ QUESTIONS -->
+    <div class="col-md-12">
+    <div class="container" id="multiCollapseExample1">
+     
+          <div class="card">
+              <div class="card-header card-header-primary">
+                  <h4 class="card-title text-center ">QUESTIONS               
+                      <div class="pull-right btn btn-warning" data-toggle="modal" role="dialog" data-target="#addAssignmentModal" data-backdrop="static" date-keyboard="false" data-focus="true" #tref><i class="fa fa-plus" aria-hidden="true"></i> ASK QUESTION</div>
+                  </h4>
+                  <p class="card-category"> Current Discussions </p>
+              </div>
+              <div class="card-body">
+                  <div class="table-responsive">
+                    
+
+                    
+                    <table class="table"> 
+                        <thead class=" text-primary">
+                            <th (click)="orderBy('note')">
+                                Question 
+                                <i *ngIf="order == 'note'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                            </th>
+                            
+                            <th (click)="orderBy('note')">
+                             Date
+                              <i *ngIf="order == 'note'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                            </th>
+                            
+                            <th>
+                                Actions
+                              </th>
+                           
+
+                        </thead>
+                        <tbody *ngIf="questions">
+                            <tr *ngFor="let x of questions">
+                                <td class="small">
+                                  {{x?.note}}
+                                </td>
+                                <td class="small">
+                                  {{x?.startDate}}
+                                </td>
+                                
+                               
+                                 <td>
+
+                                    <span class="btn btn-sm btn-danger" (click)="selectedquestion = x" data-toggle="modal" data-target="#deleteModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
+                                    <span class="btn btn-sm btn-warning" (click)="selectedquestion = x" data-toggle="modal" data-target="#editQuestionModal" > <i class="fa fa-edit" aria-hidden="true"></i></span> 
+                                    <span class="btn btn-sm btn-success" (click)="details(x.qid)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
+                                  </td>
+                            </tr>
+                        </tbody>
+                    </table>                   </div>
+              </div>
+          </div>
+      </div>
+
+</div>
+
+      <
+
+
+
+    <!--
+    <div >
+      <div class="card">
+          <div class="card-body">
+              <div class="card card-profile"  >
+                  <div class="card-avatar">
+                      <a>
+                          <img class="img" src="./assets/img/faces/avatar.jpg " />
+
+                        
+                      </a>
+                  </div>
+                  <div class="card-body">
+                          <!-- <input type="text" class="form-control" [(ngModel)]="class.photo"> -->
+<!--
+                      <h6 class="card-category text-gray">{{class?.room}} </h6>
+                      <h4 class="card-title">{{class?.courseName}} / {{class?.courseId}} </h4>
+                      <p class="card-description">
+                         {{admin?.aboutMe}}
+                         <br>
+                         <strong>32</strong>  Students
+                         
+                      </p>
+                      <table class="text-center table bordered striped">
+                          <thead style="background-color:rgba(0, 0, 0, 0.086)">
+                             <th>Monday</th>
+                             <th>Tuesday</th>
+                             <th>Wednesday</th>
+                             <th>Thursday</th>
+                             <th>Friday</th>
+                           </thead>
+                           <tbody>
+                             <tr>
+                                <td class="small">2:30pm -- 5:30pm</td>
+                                <td>2:30pm -- 5:30pm</td>
+                                <td>2:30pm -- 5:30pm</td>
+                                <td>2:30pm -- 5:30pm</td>
+                                <td>2:30pm -- 5:30pm</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <hr>
+                        
+                      <a  class="btn btn-warning btn-round" (click)="logOut()">Setting</a>
+                  </div>
+              </div>
+              <div class="table-responsive">
+                <div class="input-group">
+                  <span class="input-group-btn">
+                    <a class="btn btn-secondary" type="button" aria-label=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                  </span>
+                  <input type="search" class="form-control" name="name" id="name" placeholder="Search student..." aria-label="" [(ngModel)]="term">
+                </div>
+
+                
+                  <table class="table">
+                      <thead class=" text-primary">
+                          <th>
+                            Roll No
+                          </th>
+                          <th (click)="orderBy('courseName')">
+                             Name
+                              <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                          </th>
+                          
+                           <th>
+                              Actions
+                          </th>
+
+                      </thead>
+                      <tbody *ngIf="students">
+                          <tr *ngFor="let x of students | filter:term | orderBy: order" >
+                              <td>{{x?.rollno}}</td>
+                              <td>{{x.name}}</td>
+                              <td>
+                                  <!-- <span class="btn btn-sm btn-danger" (click)="selectedVaccine = x" data-toggle="modal" data-target="#deleteModal" > <i class="fa fa-remove" aria-hidden="true"></i></span>  -->
+                                  <!-- <span class="btn btn-sm btn-warning" (click)="selectedVaccine = x" data-toggle="modal" data-target="#editModal" > <i class="fa fa-edit" aria-hidden="true"></i></span>  -->
+                                <!--  <span class="btn btn-sm btn-success" (click)="details(x.id)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
+                                </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+
+</div>
+
+
+
+
+ 
+
+
+  
+
+  <!-- ::::::::::::::::::::::::::::::::::::::::::::::::: MODALS ::::::::::::::::::::::::::::::::::::: -->
+
+  <!-- :::::::::::::: QUESTIONSs ::::::::::: -->
+
+  <!--ADD QUESTION -->
+  <div class="modal fade" id="addAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="addAssignmentModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addAssignmentModalLabel">Create Question</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <form #addAssignmentForm="ngForm" (submit)="submitQuestion(addAssignmentForm.value)">
+                <div class="row">
+         
+      
+                  <div class="col-md-12 form-group">
+                    <!-- <label for=""><strong>Question</strong></label> -->
+                      <textarea class="form-control" name="note"  rows="5" placeholder=" Write Question Here" ngModel></textarea>
+                    </div>
+<!--                     
+                    <input type="file" (change)="uploadFile($event)" />
+                    <div>{{ uploadPercent | async }}</div>
+                    <a [href]="downloadURL "  name ="downloadURL" >{{ downloadURL }}</a>
+                     
+                      <img [src]="downloadURL" [alt]="downloadURL" width="50" height="50"  name="link"> -->
+        
+                </div>
+        </form>
+        
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="submitQuestion(addAssignmentForm.value)" >Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--  EDIT QUESTIOM-->
+  <div class="modal fade" id="editQuestionModal" tabindex="-1" role="dialog" aria-labelledby="editQuestionModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModal">Edit Question</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" *ngIf="selectedquestion">
+          <div class="container">
+            <form #editQuestionForm="ngForm" (submit)="update(editQuestionForm.value)">
+                <div class="row">
+         
+      
+                  <div class="col-md-12 form-group" >
+                    <!-- <label for=""><strong>Question</strong></label> -->
+                      <textarea class="form-control" name="note"  rows="5" placeholder=" Write Question Here" [(ngModel)]="selectedquestion.note"></textarea>
+                    </div>
+<!--                     
+                    <input type="file" (change)="uploadFile($event)" />
+                    <div>{{ uploadPercent | async }}</div>
+                    <a [href]="downloadURL "  name ="downloadURL" >{{ downloadURL }}</a>
+                     
+                      <img [src]="downloadURL" [alt]="downloadURL" width="50" height="50"  name="link"> -->
+        
+                </div>
+        </form>
+        
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="update(selectedquestion)" >UPDATE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+<!-- Delete QUESTION Modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+  <div class="modal-dialog modal-sm|lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="deleteModal">Confirm Delete</h4>
+      </div>
+      <div class="modal-body" *ngIf="selectedquestion">
+       Are you sure you want to delete <span class="text-danger"> {{selectedquestion?.note}}</span> Question?       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" (click)="delete(selectedquestion)">Delete</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+

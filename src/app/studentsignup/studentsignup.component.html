@@ -11,23 +11,13 @@
 <div class="section section-signup page-header" style="background-image: url('http://backgroundcheckall.com/wp-content/uploads/2017/12/software-company-background-images-4.jpg');padding:120px;">
   <div class="container">
       <div class="row">
-          <div class="col-md-4 ml-auto mr-auto">
+          <div class="col-md-8 ml-auto mr-auto">
               <div class="card card-signup">
                    
                   <!-- <form class="form" method="" action=""> -->
                       <div class="card-header card-header-primary text-center">
                           <h4>Signup </h4>
-                          <div class="social-line">
-                              <a href="#pablo" class="btn btn-primary btn-just-icon">
-                                  <i class="fa fa-facebook-square"></i>
-                              </a>
-                              <a href="#pablo" class="btn btn-primary btn-just-icon">
-                                  <i class="fa fa-twitter"></i>
-                              </a>
-                              <a href="#pablo" class="btn btn-primary btn-just-icon">
-                                  <i class="fa fa-google-plus"></i>
-                              </a>
-                          </div>
+                         
                           <p class="text-center" routerLink="/slogin"> or <u>Login </u></p>
                       </div>
                       <p class="text-divider text-center alert alert-danger" *ngIf="error">ERROR:{{error}}</p>
@@ -76,10 +66,50 @@
 
                       <div class="input-group">
                         <span class="input-group-addon">
-                          
+                            <i class="material-icons">account_circle</i>
                         </span>
-                        <input type="text" class="form-control" placeholder="Roll Num..." [(ngModel)]="user.rollno" #rollno="ngModel">
+                        <input type="text" class="form-control" placeholder="First Name..." required fname
+                        [(ngModel)]="user.firstName" #fname="ngModel">
                     </div>
+                    <div *ngIf="fname.invalid && (fname.dirty )"
+                    class="alert alert-danger small">
+               
+                    <div *ngIf="fname.errors.required">
+                      First Name is required.
+                    </div>
+                   
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="material-icons">account_circle</i>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Last Name..." required lname
+                    [(ngModel)]="user.lastName" #lname="ngModel">
+                </div>
+                <div *ngIf="lname.invalid && (fname.dirty )"
+                class="alert alert-danger small">
+           
+                <div *ngIf="lname.errors.required">
+                 Last Name is required.
+                </div>
+               
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="material-icons">perm_identity
+                    </i>
+                </span>
+                <input type="text" class="form-control" placeholder="Roll No..." required rid
+                [(ngModel)]="user.rollno" #rid="ngModel">
+            </div>
+            <div *ngIf="rid.invalid && (rid.dirty )"
+            class="alert alert-danger small">
+       
+            <div *ngIf="rid.errors.required">
+              Roll Number Is is required.
+            </div>
+           
+        </div>
                           <!-- If you want to add a checkbox to this form, uncomment this code
 
     <div class="form-check">
@@ -93,7 +123,7 @@
     </div> -->
                       </div>
                       <div class="card-footer justify-content-center">
-                          <button class="btn btn-primary btn-lg" (click)="signup()">Join Now</button>
+                          <button class="btn btn-primary btn-lg" [disabled]="!fname.valid || !lname.valid || !rid.valid" (click)="signup()">Join Now</button>
                       </div>
                   <!-- </form> -->
               </div>

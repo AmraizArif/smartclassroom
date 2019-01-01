@@ -5,13 +5,13 @@
     .card{
     
     margin-top: 100px;
-    margin-left: 100px;
+    margin-left: 10px;
     }
     
     .mydiv{
         margin-top: 100px;
-        margin-left: 100px;
-        margin-right: 100px;
+        margin-left: 10px;
+        /* margin-right: 100px; */
     }
     
     #wrn{
@@ -20,6 +20,14 @@
     #ansbox{
         padding:30px;border:2px;border-style: solid;
 margin-top: 100px;
-        margin-left: 100px;
-        margin-right: 100px;
+        margin-left: 10px;
+        /* margin-right: 100px; */
+    }
+    #ansid{
+        visibility: hidden;
+
+
+    }
+    #ansvote{
+        visibility: hidden
     }

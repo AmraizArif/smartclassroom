@@ -17,7 +17,8 @@ export class ClassComponent implements OnInit {
   constructor(private api:ApiService, private route: ActivatedRoute,private router:Router,private storage:AngularFireStorage) { }
   uploadPercent: Observable<number>;
   downloadURL: Observable<string>;
-
+title;
+num;
   class;
   students:any =[{rollno:'SP15-BSE-000', name:'Ali Zahid'}];
   assigments;
@@ -34,9 +35,15 @@ export class ClassComponent implements OnInit {
  public fileRef;
  public urlnew;
   public task;
+  error;
+  assignment={
+    num:'',
+    title:""
+  }
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
+    console.log(this.route.url)
     this.classId = id;
     this.getClass(id);
     console.log(id); 
@@ -67,6 +74,7 @@ export class ClassComponent implements OnInit {
 
     }).subscribe(resp=>{
       this.assigments =resp;
+     
     })
   }
 
@@ -121,6 +129,14 @@ updateMaterial(data){
   });
 }
 
+updateNotification(data){
+  $('#editNotificationModal').modal('hide');
+  console.log(data.id);
+  this.api.updateNotification(data.id, data).then(res=>{
+
+    this.selectedNotification ={};
+  });
+}
 //Notification Get Set
 getNotification(){
   this.api.getNotifications(this.classId).map(actions => {
@@ -200,10 +216,16 @@ submitNotification(val){
 
 
 //val.file=this.downloadURL;
-val.urlnew=this.downloadURL;
+
+if(this.downloadURL){
+  val.urlnew=this.downloadURL;}
+  else{
+    val.urlnew=""
+  }
+
     val.startDate = new Date().getUTCDate();
     val.classId = this.classId;
-
+val.creatorId=this.api.adminId;
     this.api.addAssigment(val).then(res=>{
 
     },err=>{

@@ -26,12 +26,7 @@
               </div>
               <div class="card-body">
                   <div class="table-responsive">
-                    <div class="input-group">
-                      <span class="input-group-btn">
-                        <a class="btn btn-secondary" type="button" aria-label=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
-                      </span>
-                      <input type="search" class="form-control" name="name" id="name" placeholder="Search..." aria-label="" [(ngModel)]="term">
-                    </div>
+                    
 
                     
                     <table class="table"> 
@@ -42,18 +37,19 @@
                             </th>
                             
                             <th (click)="orderBy('courseId')">
-                              Deadline
+                              Title
                               <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                            </th>
+                            <th>
+                              Deadline
                             </th>
                             <th>
                               File
                             </th>
-                            <th>
-                              Status
-                            </th>
                              <th>
-                                Actions
+                                Status
                             </th>
+                            <th>Actions</th>
 
                         </thead>
                         <tbody *ngIf="assigments">
@@ -62,10 +58,13 @@
                                   {{x?.num}}
                                 </td>
                                 <td class="small">
-                                  {{x?.deadline}}
+                                  {{x?.title}}
                                 </td>
                                 <td class="small">
-                               <a href="{{x?.urlnew}}">  <img src="{{x?.urlnew}}" width="50" height="50"  name="link"> </a>
+                                    {{x?.deadline}}
+                                  </td>
+                                <td class="small">
+                                    <a *ngIf="x?.urlnew" href="{{x?.urlnew}}">  <i class="material-icons" name="link">books</i> </a>
                                 </td>
                                 <td class="small">
                                     
@@ -74,11 +73,11 @@
                                         <span class="badge badge-danger" *ngIf="x.status == 'cancel'">Cancel</span>
                      
                                 </td>
-                                 <td>
+                                 <td class="small">
 
-                                    <span class="btn btn-sm btn-danger" (click)="selectedAssignment = x" data-toggle="modal" data-target="#deleteAssignmentModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
-                                    <span class="btn btn-sm btn-warning" (click)="selectedAssignment = x" data-toggle="modal" data-target="#editAssignmentModal" > <i class="fa fa-edit" aria-hidden="true"></i></span> 
-                                    <span class="btn btn-sm btn-success" (click)="AssignmentDetails(x.id)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
+                                    <!-- <span class="btn btn-sm btn-danger" (click)="selectedAssignment = x" data-toggle="modal" data-target="#deleteAssignmentModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
+                                    <span class="btn btn-sm btn-warning" (click)="selectedAssignment = x" data-toggle="modal" data-target="#editAssignmentModal" > <i class="fa fa-edit" aria-hidden="true"></i></span>  -->
+                                    <span class="btn btn-sm btn-success" (click)="selectedAssignment = x" data-toggle="modal" data-target="#assignmentSubmitModal"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
                                   </td>
                             </tr>
                         </tbody>
@@ -210,12 +209,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                  <div class="input-group">
-                    <span class="input-group-btn">
-                      <a class="btn btn-secondary" type="button" aria-label=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
-                    </span>
-                    <input type="search" class="form-control" name="name" id="name" placeholder="Search..." aria-label="" [(ngModel)]="term">
-                  </div>
+                 
 
                   
                   <table class="table"> 
@@ -243,14 +237,10 @@
                                 {{x?.note}}
                               </td>
                               <td class="small">
-                                <a href="{{x?.urlnew}}"><img src="{{x?.urlnew}}" width="50" height="50"  name="link"> </a>
-                              </td>
+                                <a href="{{x?.urlnew}}">   <i class="material-icons" name="link">library_books</i> </a> 
                               <td>
 
-                                  <span class="btn btn-sm btn-danger" (click)="selectedMaterial = x" data-toggle="modal" data-target="#deleteMaterialModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
-                                  <span class="btn btn-sm btn-warning" (click)="selectedMaterial = x" data-toggle="modal" data-target="#editMaterialModal" > <i class="fa fa-edit" aria-hidden="true"></i></span> 
-                                  <span class="btn btn-sm btn-success" (click)="AssignmentDetails(x.id)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
-                                </td>
+                                
                               
                           </tr>
                       </tbody>
@@ -332,3 +322,38 @@
 </div>
 </div> 
 
+ <!-- Assignment SUBMIT MODAL-->
+  
+ <div class="modal fade" id="assignmentSubmitModal" tabindex="-1" role="dialog" aria-labelledby="assignmentSubmitModal" aria-hidden="true">
+    <div class="modal-dialog modal-sm|lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="assignmentSubmitModal">Student Assignment</h4>
+        </div>
+        <div class="modal-body" *ngIf="selectedAssignment">
+            <input type="file" (change)="uploadFile($event)" />
+            <!-- <div>{{ uploadPercent | async }}</div> -->
+            
+              <div class="progress-bar" style="width: 100%" role="progressbar"  aria-valuenow=" uploadPercent|async " aria-valuemin="0" aria-valuemax="100">{{ uploadPercent | async }}</div>
+           
+            <!-- <a [href]="downloadURL "  name ="downloadURL" placeholder="Link" >{{ downloadURL }}</a> -->
+             
+              <img [src]="downloadURL" [alt]="downloadURL" width="50" height="50"  name="link">
+
+       
+        </div>
+        
+
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button"  class="btn btn-primary" (click)="submitAssignment(selectedAssignment)" >Save changes</button>
+          </div>
+      </div>
+      
+    </div>
+   
+    </div>

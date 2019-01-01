@@ -11,7 +11,11 @@ export class SignupComponent implements OnInit {
 
   user={
     email:'',
-    password:''
+    password:'',
+    firstName:'',
+    lastName:'',
+    registerationId:'',
+
   }
 error;  
 correct={
@@ -67,7 +71,11 @@ constructor(private router:Router, private api:ApiService) { }
       this.api.addTeacherProfile(response.user.uid, {
         uid: response.user.uid,
         email: this.user.email,
-        password: this.user.password
+        password: this.user.password,
+        firstName:this.user.firstName,
+        lastName:this.user.lastName,
+        registerationId:this.user.registerationId
+
       }).then(ondone=>{
 
    

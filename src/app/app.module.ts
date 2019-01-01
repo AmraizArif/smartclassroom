@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule} from '@angular/forms';
-
+import {DatePipe} from '@angular/common';
 //FIREBASE
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore'
@@ -54,12 +54,24 @@ import{QrcodereaderService} from './qrcodereader.service';
 import { StudentheaderComponent } from './studentheader/studentheader.component';
 import { StudentprofileComponent } from './studentprofile/studentprofile.component';
 import { QuestionpanelComponent } from './questionpanel/questionpanel.component';
+import { PrivatechatComponent } from './privatechat/privatechat.component';
+import { TchatComponent } from './tchat/tchat.component';
+import { SdiscussionComponent } from './sdiscussion/sdiscussion.component';
+import { SquestionComponent } from './squestion/squestion.component';
+import { QuizComponent } from './quiz/quiz.component';
+import { SquizComponent } from './squiz/squiz.component';
+import { QuizpanelComponent } from './quizpanel/quizpanel.component';
+import { TeachermessageComponent } from './teachermessage/teachermessage.component';
+import { StudentdetailComponent } from './studentdetail/studentdetail.component';
+import { MainComponent } from './main/main.component';
+import { CompletedclassesComponent } from './completedclasses/completedclasses.component';
+import { TeachercompletedComponent } from './teachercompleted/teachercompleted.component';
 
 
 
 
 let ROUTES =[
-  {path:'', redirectTo:'login', pathMatch:'full'},
+  {path:'', redirectTo:'landing', pathMatch:'full'},
   {path:'landing', component:LandingComponent},
   {path:'statistics', component:HomeComponent},
   {path:'team', component:TeamComponent},
@@ -73,23 +85,34 @@ let ROUTES =[
 {path:'',redirectTo:'shome',pathMatch:'full'},
 {path:'shome',component:ShomeComponent},
 {path:'sclasses',component:StudentclassesComponent},
+{path:'completed',component:CompletedclassesComponent},
 { path: 'scpanel/:id', component: ScpanelComponent},
 { path: 'sclasses/:id' ,component:StudentclassComponent},
-{path:'profile',component:StudentprofileComponent}
+{ path: 'sdiscussion/:id' ,component:SdiscussionComponent},
+{path:'sdiscussion/question/:c',component:SquestionComponent},
+{path:'chat/:id',component:PrivatechatComponent},
+{path:'profile',component:StudentprofileComponent},
+{path:'quiz/:id',component:SquizComponent},
+{path:'quiz/quizpanel/:id',component:QuizpanelComponent}
 ]
 },
   {path:'dashboard', component:DashboardComponent,canActivate: [AuthGuard], children:[
     {path:'', redirectTo:'home', pathMatch:'full'},
     {path:'home', component:HomeComponent},
     {path:'profile', component:ProfileComponent},
+    {path:'tmessage',component:TeachermessageComponent},
     //real ones
+    {path:'completed',component:TeachercompletedComponent},
     { path: 'classes', component: ClassesComponent,canActivate: [AuthGuard]},
     { path: 'classes/:id' ,component:ClassComponent},
     { path: 'setting', component: SettingComponent},
     { path: 'help', component: HelpComponent},
     { path: 'cpanel/:id', component: CoursepanelComponent},
+    {path:'students/:id',component:StudentdetailComponent},
     { path: 'discussion/:id' ,component:DiscussionpanelComponent},
-    {path:'discussion/question/:c',component:QuestionpanelComponent}
+    {path:'discussion/question/:c',component:QuestionpanelComponent},
+    {path:'chat/:id',component:TchatComponent},
+    {path:'quiz/:id',component:QuizComponent}
     
     
 ]},
@@ -140,7 +163,20 @@ let firebaseConfig= {
     DiscussionpanelComponent,
     StudentheaderComponent,
     StudentprofileComponent,
-    QuestionpanelComponent
+    QuestionpanelComponent,
+    PrivatechatComponent,
+    TchatComponent,
+    SdiscussionComponent,
+    SquestionComponent,
+    QuizComponent,
+    SquizComponent,
+    QuizpanelComponent,
+    TeachermessageComponent,
+    StudentdetailComponent,
+    MainComponent,
+    CompletedclassesComponent,
+    TeachercompletedComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -158,7 +194,7 @@ let firebaseConfig= {
     ToastrModule.forRoot(),
     
   ],
-  providers: [ApiService,AuthService,AuthGuard,QrcodereaderService],
+  providers: [ApiService,AuthService,AuthGuard,QrcodereaderService,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

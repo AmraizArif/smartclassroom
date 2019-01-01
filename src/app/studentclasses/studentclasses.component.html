@@ -17,72 +17,60 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                      <div class="input-group">
-                        <span class="input-group-btn">
-                          <a class="btn btn-secondary" type="button" aria-label=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
-                        </span>
-                        <input type="search" class="form-control" name="name" id="name" placeholder="Search..." aria-label="" [(ngModel)]="term">
-                      </div>
-  
+                      
                       
                         <table class="table">
                             <thead class=" text-primary">
                                 <th>
-                                   Class ID
+                                   Course Name
                                 </th>
                                 <th>
-                                  QR
+                                  Course Id
                                </th>
                                 <th (click)="orderBy('courseName')">
-                                    Course Name
+                                    Room No
                                     <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
                                 </th>
                                 <th (click)="orderBy('courseId')">
-                                  Course ID
+                                 Note
                                   <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
   
                                 </th>
-                                <th (click)="orderBy('room')">
-                                    Room No
-                                    <i *ngIf="order == 'room'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                                <th>
+                                  Status
                                 </th>
+                                
                                 <th (click)="orderBy('dosage')">
-                                    Students
+                                   Actions
                                     <i *ngIf="order == 'dosage'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
                                 </th>
-                                <th>
-                                  Note
-                                </th>
-                                 <th>
-                                    Actions
-                                </th>
+                                
   
                             </thead>
                             <tbody *ngIf="courses">
                                 <tr *ngFor="let x of courses | filter:term | orderBy: order" >
-                                    <td>
-                                      {{x?.id}}
-                                    </td>
-                                    <td>
-                                      <qrcode [qrdata]="x.id"  colordark="#A23DB7" [size]="128" [level]="'M'"></qrcode>
-  
-                                    </td>
-                                    <td>
+                                    <td *ngIf="x.status == 'active'">
                                       {{x?.courseName}}
                                     </td>
-                                    <td>
-                                        {{x?.courseId}}
+                                    <td *ngIf="x.status == 'active'">
+                                      {{x?.courseId}}
+  
                                     </td>
-                                    <td>
-                                        {{x?.room}}
+                                    <td *ngIf="x.status == 'active'">
+                                      {{x?.room}}
                                     </td>
-                                    <td>
-                                      
-                                    </td>
-                                     <td>
+                                    <td *ngIf="x.status == 'active'">
                                         {{x?.note}}
-                                     </td>
-                                     <td>
+                                    </td>
+                                    <td class="small" *ngIf="x.status == 'active'">
+                                    
+                                      <span class="badge badge-warning" *ngIf="x.status == 'active'">Active</span>
+                                      <span class="badge badge-success" *ngIf="x.status == 'completed'">Completed</span>
+                                      <span class="badge badge-danger" *ngIf="x.status == 'cancel'">Cancel</span>
+                   
+                              </td>
+                                  
+                                     <td *ngIf="x.status == 'active'">
   
                                         <!-- <span class="btn btn-sm btn-danger" (click)="selectedClass = x" data-toggle="modal" data-target="#deleteModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
                                         <span class="btn btn-sm btn-warning" (click)="selectedClass = x" data-toggle="modal" data-target="#editModal" > <i class="fa fa-edit" aria-hidden="true"></i></span>  -->
@@ -212,3 +200,5 @@
           </div>
         </div>
       </div>
+
+    

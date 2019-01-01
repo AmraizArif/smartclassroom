@@ -26,12 +26,12 @@
               </div>
               <div class="card-body">
                   <div class="table-responsive">
-                    <div class="input-group">
+                    <!-- <div class="input-group">
                       <span class="input-group-btn">
                         <a class="btn btn-secondary" type="button" aria-label=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
                       </span>
                       <input type="search" class="form-control" name="name" id="name" placeholder="Search..." aria-label="" [(ngModel)]="term">
-                    </div>
+                    </div> -->
 
                     
                     <table class="table"> 
@@ -39,6 +39,9 @@
                             <th (click)="orderBy('courseName')">
                                 Assignment #
                                 <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                            </th>
+                            <th>
+                              Title
                             </th>
                             
                             <th (click)="orderBy('courseId')">
@@ -62,10 +65,13 @@
                                   {{x?.num}}
                                 </td>
                                 <td class="small">
+                                     {{x?.title}}
+                                </td>
+                                <td class="small">
                                   {{x?.deadline}}
                                 </td>
                                 <td class="small">
-                                  <img src="{{x?.urlnew}}" width="50" height="50"  name="link"> 
+                                 <a *ngIf="x?.urlnew" href="{{x?.urlnew}}">  <i class="material-icons" name="link">books</i> </a>
                                 </td>
                                 <td class="small">
                                     
@@ -78,7 +84,7 @@
 
                                     <span class="btn btn-sm btn-danger" (click)="selectedAssignment = x" data-toggle="modal" data-target="#deleteAssignmentModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
                                     <span class="btn btn-sm btn-warning" (click)="selectedAssignment = x" data-toggle="modal" data-target="#editAssignmentModal" > <i class="fa fa-edit" aria-hidden="true"></i></span> 
-                                    <span class="btn btn-sm btn-success" (click)="AssignmentDetails(x.id)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
+                                    <span class="btn btn-sm btn-success" (click)="selectedAssignment= x" data-toggle="modal" data-target="#assignmentMarksModal"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
                                   </td>
                             </tr>
                         </tbody>
@@ -102,12 +108,12 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                  <div class="input-group">
+                  <!-- <div class="input-group">
                     <span class="input-group-btn">
                       <a class="btn btn-secondary" type="button" aria-label=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
                     </span>
                     <input type="search" class="form-control" name="name" id="name" placeholder="Search..." aria-label="" [(ngModel)]="term">
-                  </div>
+                  </div> -->
 
                   
                    <table class="table"> 
@@ -281,18 +287,27 @@
         </div>
         <div class="modal-body">
           <div class="container">
-            <form #addAssignmentForm="ngForm" (submit)="submitAssignment(addAssignmentForm.value)">
+            <form #addAssignmentForm="ngForm" (submit)="submitAssignment(addAssignmentForm.value)" ngNativeValidate>
                 <div class="row">
           <div class="col-md-12 form-group">
             <label for=""></label>
             <input type="text"
-              class="form-control" name="title" placeholder="Assigment Title" ngModel>
+              class="form-control" name="title" placeholder="Assigment Title" [(ngModel)]="assignment.title" #title="ngModel"  pattern="^(?:[A-z ]{3,30})$" required title="First word capital"><br>
+              <span class="alert alert-danger small" *ngIf="title.errors?.pattern">
+               Min 3 alphabet & Max 30 alphabet required
+              </span>
           </div>
+         
           <div class="col-md-6 form-group">
             <label for=""></label>
             <input type="number"
-              class="form-control" name="num"  aria-describedby="helpId" placeholder="Assignment #03" ngModel>
+              class="form-control" name="num"  aria-describedby="helpId" placeholder="Assignment #1 - 10" pattern="^(?:[1-9]|0[1-9]|10)$" title="1 to 10 numeric digits" [(ngModel)]="assignment.num" #num="ngModel" required>
+              <br>
+              <span class="alert alert-danger small" *ngIf="num.errors?.pattern">
+               Only numbers from 1 to 10
+              </span>
           </div>
+         
           <div class="col-md-6 form-group">
               <label for=""></label>
               <input type="date"
@@ -308,29 +323,18 @@
                           </select>
                       </div>
 
-                      <div class="col-md-12 form-group">
-                          <label for=""></label>
-
-                          
-
-
-                         <div style="background-color:#fece1a;padding:30px;width:100%;border:2px;border-style: dotted">
-                          
-                          <input type="file" class="text-center" (change)="uploadFile($event)" />
-                        
-                          </div>
-                          <input type="file"
-                            class="form-control" name="deadline" aria-describedby="helpId" placeholder="Deadline" ngModel>
-                        </div>
-                      
+               
                   <div class="col-md-12 form-group">
-                      <label for="">Note</label>
+                      <label for=""></label>
                       <textarea class="form-control" name="note"  rows="3" placeholder=" Note.." ngModel></textarea>
                     </div>
                     
                     <input type="file" (change)="uploadFile($event)" />
-                    <div>{{ uploadPercent | async }}</div>
-                    <a [href]="downloadURL "  name ="downloadURL" >{{ downloadURL }}</a>
+                    <!-- <div>{{ uploadPercent | async }}</div> -->
+                    
+                      <div class="progress-bar" style="width: 100%" role="progressbar"  aria-valuenow=" uploadPercent|async " aria-valuemin="0" aria-valuemax="100">{{ uploadPercent | async }}</div>
+                   
+                    <!-- <a [href]="downloadURL "  name ="downloadURL" placeholder="Link" >{{ downloadURL }}</a> -->
                      
                       <img [src]="downloadURL" [alt]="downloadURL" width="50" height="50"  name="link">
         
@@ -341,7 +345,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" (click)="submitAssignment(addAssignmentForm.value)" >Save changes</button>
+          <button type="button" [disabled]="!addAssignmentForm.valid" class="btn btn-primary" (click)="submitAssignment(addAssignmentForm.value)" >Save changes</button>
         </div>
       </div>
     </div>
@@ -365,7 +369,10 @@
           <div class="col-md-12 form-group">
             <label for=""></label>
             <input type="text"
-              class="form-control" name="title" id="" aria-describedby="helpId" placeholder="Assignment Title" [(ngModel)]="selectedAssignment.title">
+              class="form-control" name="title" id="" aria-describedby="helpId" placeholder="Assignment Title" pattern="^(?:[A-z ]{3,30})$" [(ngModel)]="selectedAssignment.title" #title="ngModel"><br>
+              <span class="alert alert-danger small" *ngIf="title.errors?.pattern">
+                Min 3 alphabet & Max 30 alphabet required
+               </span>
           </div>
           <div class="col-md-6 form-group">
               <label for=""></label>
@@ -377,8 +384,16 @@
                 <input type="text"
                   class="form-control" name="deadline" id="" aria-describedby="helpId" placeholder="Deadline"  [(ngModel)]="selectedAssignment.deadline">
               </div>
+              <div class="col-md-6 form-group">
+                <label for="">Status</label>
+                <select class="form-control" name="status" [(ngModel)]="selectedAssignment.status">
+                  <option value="active">Active</option>
+                  <option value="completed">completed</option>
+                  <option value="cancel">cancel</option>
+                </select>
+            </div>
                     <div class="col-md-12 form-group">
-                      <label for="">Note</label>
+                      <!-- <label for="">Note</label> -->
                       <textarea class="form-control" name="note" id="" rows="3" placeholder="Extra Note.."  [(ngModel)]="selectedAssignment.note"></textarea>
                     </div>
                 </div>
@@ -575,13 +590,13 @@
           
                       
                   <div class="col-md-12 form-group">
-                      <label for="">Version</label>
+                      <!-- <label for="">Version</label> -->
                       <textarea class="form-control" name="note"  rows="3" placeholder=" Version.." ngModel></textarea>
                     </div>
                     
                     <input type="file" (change)="uploadFile($event)" />
-                    <div>{{ uploadPercent | async }}</div>
-                    <a [href]="downloadURL "  name ="downloadURL" >{{ downloadURL }}</a>
+                    <div class="progress-bar" style="width: 100%" role="progressbar"  aria-valuenow=" uploadPercent|async " aria-valuemin="0" aria-valuemax="100">{{ uploadPercent | async }}</div>
+                    <!-- <a [href]="downloadURL "  name ="downloadURL" >{{ downloadURL }}</a> -->
                      
                       <img [src]="downloadURL" width="50" height="50"  name="link">
         
@@ -633,16 +648,16 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                  <div class="input-group">
+                  <!-- <div class="input-group">
                     <span class="input-group-btn">
                       <a class="btn btn-secondary" type="button" aria-label=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
                     </span>
                     <input type="search" class="form-control" name="name" id="name" placeholder="Search..." aria-label="" [(ngModel)]="term">
-                  </div>
+                  </div> -->
 
                   
                   <table class="table"> 
-                      <thead class=" text-primary">
+                      <thead class=" text-primary" style="width:auto">
                           <th (click)="orderBy('courseName')">
                               Title
                               <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
@@ -655,9 +670,11 @@
                           <th>
                             File
                           </th>
+                          <th></th>
+                          <th>Actions</th>
                          
                       </thead>
-                      <tbody *ngIf="readingmaterial">
+                      <tbody *ngIf="readingmaterial" style="width:auto">
                           <tr *ngFor="let x of readingmaterial">
                               <td class="small">
                                 {{x?.title}}
@@ -666,15 +683,15 @@
                                 {{x?.note}}
                               </td>
                               <td class="small">
-                                <img src="{{x?.urlnew}}" width="50" height="50"  name="link"> 
+                             <a href="{{x?.urlnew}}">   <i class="material-icons" name="link">library_books</i> </a> 
                               </td>
+                           <td></td>
                               <td>
 
-                                  <span class="btn btn-sm btn-danger" (click)="selectedMaterial = x" data-toggle="modal" data-target="#deleteMaterialModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
-                                  <span class="btn btn-sm btn-warning" (click)="selectedMaterial = x" data-toggle="modal" data-target="#editMaterialModal" > <i class="fa fa-edit" aria-hidden="true"></i></span> 
-                                  <span class="btn btn-sm btn-success" (click)="AssignmentDetails(x.id)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
-                                </td>
-                              
+                                <span class="btn btn-sm btn-danger" (click)="selectedMaterial = x" data-toggle="modal" data-target="#deleteMaterialModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
+                                <span class="btn btn-sm btn-warning" (click)="selectedMaterial = x" data-toggle="modal" data-target="#editMaterialModal" > <i class="fa fa-edit" aria-hidden="true"></i></span> 
+                                <!-- <span class="btn btn-sm btn-success" (click)="AssignmentDetails(x.id)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span>  -->
+                              </td>
                           </tr>
                       </tbody>
                   </table>                   </div>
@@ -709,10 +726,10 @@
               class="form-control" name="num" id="" aria-describedby="helpId" placeholder="Version #"  [(ngModel)]="selectedMaterial.note">
           </div>
           <input type="file" (change)="uploadFile($event)" />
-          <div>{{ uploadPercent | async }}</div>
-          <a [href]="downloadURL "  name ="downloadURL" >{{ downloadURL }}</a>
+          <div class="progress-bar" style="width: 100%" role="progressbar"  aria-valuenow=" uploadPercent|async " aria-valuemin="0" aria-valuemax="100">{{ uploadPercent | async }}</div>
+          <!-- <a [href]="downloadURL "  name ="downloadURL" >{{ downloadURL }}</a> -->
            
-            <img [src]="downloadURL" [alt]="downloadURL" width="50" height="50"  name="link">
+            <!-- <img [src]="downloadURL" [alt]="No preview" width="50" height="50"  name="link"> -->
             
                 
               </div>
@@ -767,13 +784,13 @@
                     <th>
                       Status
                     </th>
-                     
+                     <th>Actions</th>
 
                  </thead>
                 <tbody *ngIf="notifications">
                   <tr *ngFor="let x of notifications">
                         <td class="strong">
-                          {{x?.id}}
+                          {{x?.nid}}
                         </td>
                         <td class="small ">
                             <b>{{x?.description}}</b>
@@ -786,7 +803,12 @@
                           <span class="badge badge-success" *ngIf="x.status == 'completed'">Expired</span>
                           <span class="badge badge-danger" *ngIf="x.status == 'cancel'">Future</span>
                   </td>
-                        
+                  <td>
+
+
+                    <span class="btn btn-sm btn-warning" (click)="selectedNotification = x" data-toggle="modal" data-target="#editNotificationModal" > <i class="fa fa-edit" aria-hidden="true"></i></span> 
+                    <!-- <span class="btn btn-sm btn-success" (click)="AssignmentDetails(x.id)"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span>  -->
+                  </td>
                           
                     </tr>
                 </tbody>
@@ -815,17 +837,17 @@
         <div class="col-md-12 form-group">
           <label for=""></label>
           <input type="text"
-            class="form-control" name="id" placeholder="ID" ngModel>
+            class="form-control" name="nid" placeholder="ID" ngModel>
         </div>
         
                     
                 <div class="col-md-12 form-group">
-                    <label for="">Description</label>
+                    <!-- <label for="">Description</label> -->
                     <textarea class="form-control" name="description"  rows="3" placeholder=" Description.." ngModel></textarea>
                   </div>
                   
                   <div class="col-md-6 form-group">
-                    <label for="">Deadline</label>
+                    <!-- <label for="">Deadline</label> -->
                     <input type="date"
                       class="form-control" name="deadline" aria-describedby="helpId" placeholder="Deadline" ngModel>
                   </div>
@@ -852,3 +874,103 @@
     </div>
   </div>
 </div>
+
+<!--  EDIT NOTIFICATION-->
+
+<div class="modal fade" id="editNotificationModal" tabindex="-1" role="dialog" aria-labelledby="Update Notifications" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModal">Edit Notification</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="selectedNotification">
+        <div class="container">
+          <form #notificationUpdateForm="ngForm" (submit)="updateNotification(selectedNotification)">
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <!-- <label for="">Description</label> -->
+                  <textarea class="form-control" name="description"  rows="3" placeholder=" Description.." [(ngModel)]="selectedNotification.description"></textarea>
+                </div>
+                
+                <div class="col-md-6 form-group">
+                  <!-- <label for="">Deadline</label> -->
+                  <input type="date"
+                    class="form-control" aria-describedby="helpId" name="deadline" placeholder="Deadline" [(ngModel)]="selectedNotification.deadline">
+                </div>
+            
+                      <div class="col-md-6 form-group">
+                              <label for="">Status</label>
+                              <select class="form-control" name="status" [(ngModel)]="selectedNotification.status">
+                                <option value="active">Current</option>
+                                <option value="completed">Expired</option>
+                                <option value="future">Future</option>
+                              </select>
+                          </div>
+                
+              </div>
+      </form>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="updateNotification(selectedNotification)" >Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Assignment MARKS MODAL-->
+  
+  <div class="modal fade" id="assignmentMarksModal" tabindex="-1" role="dialog" aria-labelledby="assignmentMarksModal" aria-hidden="true">
+    <div class="modal-dialog modal-sm|lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="assignmentMarksModal">Student Assignment</h4>
+        </div>
+        <div class="modal-body" *ngIf="selectedAssignment">
+         <button (click)="getSubmissions()">SHOW SUBMISSIONS</button>
+          <table class="table"> 
+              <thead class=" text-primary">
+                  <th (click)="orderBy('courseName')">
+                      Roll #
+                      <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                  </th>
+                  
+                  <th (click)="orderBy('courseId')">
+                    Student Name
+                    <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                  </th>
+                  <th>
+                   File
+                  </th>
+                  
+
+              </thead>
+              <tbody *ngIf="assignments">
+                  <tr *ngFor="let x of assignments">
+                      <td class="small">
+                        {{x?.rollno}}
+                      </td>
+                      <td class="small">
+                        {{x?.creatorName}}
+                      </td>
+                      <td class="small">
+                        {{x?.urlnew}}
+                      </td>
+                      
+                  </tr>
+              </tbody>
+          </table>        
+       
+        </div>
+        
+      </div>
+    </div>
+    </div>

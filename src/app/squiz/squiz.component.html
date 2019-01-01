@@ -1,0 +1,177 @@
+<div class="main-panel">
+  <app-studentheader></app-studentheader>
+  <div class="content" >
+  <div class="container-fluid row">
+     
+
+        
+        
+    <!-- READ QUIZZES -->
+    <div class="col-md-12">
+    <div class="container" id="multiCollapseExample1">
+     
+          <div class="card">
+              <div class="card-header card-header-primary">
+                  <h4 class="card-title text-center ">Quiz               
+                    
+                  </h4>
+                  <p class="card-category"> Current Quizzes </p>
+              </div>
+              <div class="card-body">
+                  <div class="table-responsive">
+                    <!-- <div class="input-group">
+                      <span class="input-group-btn">
+                        <a class="btn btn-secondary" type="button" aria-label=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                      </span>
+                      <input type="search" class="form-control" name="name" id="name" placeholder="Search..." aria-label="" [(ngModel)]="term"> -->
+                    <!-- </div> -->
+
+                    
+                    <table class="table"> 
+                        <thead class=" text-primary">
+                            <th (click)="orderBy('courseName')">
+                                Quiz #
+                                <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                            </th>
+                            
+                            <th (click)="orderBy('courseId')">
+                              Date
+                              <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                            </th>
+                            <th>
+                              Topic
+                            </th>
+                            <th>
+                              Status
+                            </th>
+                             <th>
+                                Actions
+                            </th>
+
+                        </thead>
+                        <tbody *ngIf="quiz">
+                            <tr *ngFor="let x of quiz">
+                                <td class="small">
+                                  {{x?.title}}
+                                </td>
+                                <td class="small">
+                                  {{x?.deadline}}
+                                </td>
+                                <td class="small">
+                                  {{x?.title}}
+                                </td>
+                                <td class="small">
+                                    
+                                        <span class="badge badge-warning" *ngIf="x.status == 'active'">Active</span>
+                                        <span class="badge badge-success" *ngIf="x.status == 'completed'">Completed</span>
+                                        <span class="badge badge-danger" *ngIf="x.status == 'cancel'">Cancel</span>
+                     
+                                </td>
+                                 <td>
+
+                                   
+                                    <span class="btn btn-sm btn-success" (click)="selectedQuiz = x" data-toggle="modal" data-target="#rulesModal" > <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
+                                  </td>
+                            </tr>
+                        </tbody>
+                    </table>                   </div>
+              </div>
+
+
+
+
+
+
+          </div>
+      </div>
+
+
+      <div class="content">
+        <div class="container-fluid row"> </div>
+
+        <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExamplea" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Marks</a>
+
+
+
+
+<!--Solved Quizzes-->
+<div class="col-md-12">
+    <div class="collapse multi-collapse" id="multiCollapseExamplea">
+     
+          <div class="card">
+              <div class="card-header card-header-primary">
+                  <h4 class="card-title text-center ">MARKS            
+                    
+                  </h4>
+                  <p class="card-category"> Solved Quizzes Marks </p>
+              </div>
+              <div class="card-body">
+                  <div class="table-responsive">
+                    <!-- <div class="input-group">
+                      <span class="input-group-btn">
+                        <a class="btn btn-secondary" type="button" aria-label=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                      </span>
+                      <input type="search" class="form-control" name="name" id="name" placeholder="Search..." aria-label="" [(ngModel)]="term"> -->
+                    <!-- </div> -->
+  
+                    
+                    <table class="table"> 
+                        <thead class=" text-primary">
+                            <th (click)="orderBy('courseName')">
+                                Quiz #
+                                <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                            </th>
+                            
+                  
+                           
+                            <th>
+                              Marks
+                            </th>
+                             
+  
+                        </thead>
+                        <tbody *ngIf="marks">
+                            <tr *ngFor="let x of marks">
+                                <td class="small">
+                                  {{x?.title}}
+                                </td>
+                                
+                              
+                                <td class="small">
+                                    {{x?.Marks}}
+                                  </td>
+                            
+                        </tbody>
+                    </table>                   </div>
+              </div>
+      </div>
+
+</div>
+<!--QUIZ RULES -->
+<div class="modal fade" id="rulesModal" tabindex="-1" role="dialog" aria-labelledby="rulesModal" aria-hidden="true">
+  <div class="modal-dialog modal-sm|lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="rulesModal">QUIZ RULES</h4>
+      </div>
+      <div class="modal-body">
+        <li>
+          No cheating Allowed
+        </li>
+        <li>
+          Finish withing the given time or your response will not be submitted
+        </li>
+        <li>
+          Write the answer in the same format/spelling like options or it will not be considered 
+        </li>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" (click)="Details(selectedQuiz)">START QUIZ</button>
+      </div>
+    </div>
+  </div>
+  </div>

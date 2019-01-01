@@ -22,7 +22,8 @@ export class StudentsideComponent implements OnInit {
   sidebar=[
     {icon:'dashboard', url:'/sdashboard', text:'Dashboard'},
     {icon:'person', url:'/sdashboard/profile', text:'Profile'},
-    {icon:'local_pharmacy', url:'/sdashboard/sclasses', text:'Classes'},
+    {icon:'collections_bookmark', url:'/sdashboard/sclasses', text:'Classes'},
+    {icon:'collections_bookmark', url:'/sdashboard/completed', text:'Completed Classes'},
     // {icon:'local_pharmacy', url:'/dashboard/setting', text:'Setting'},
     // {icon:'local_pharmacy', url:'/dashboard/help', text:'Help'},
     // {icon:'local_hospital', url:'/dashboard/doctors', text:'Doctors'},

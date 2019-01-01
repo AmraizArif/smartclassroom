@@ -1,8 +1,8 @@
-<div class="main-panel">
+<div class="main-panel" style="padding-right:2%">
   <!-- <app-header></app-header> -->
   <div>  
-<div class="mydiv" style="padding:30px;border:2px;border-style: solid">
-<h2 style="color:#9c27b0" *ngFor="let quest of question">QUESTION:  {{quest.note}}</h2> <br>
+<div class="mydiv card" style="border:2px;border-style: solid;padding: 2px">
+<h3 style="color:#9c27b0;width: auto" *ngFor="let quest of question">QUESTION:  {{quest.note}}</h3> <br>
 
 <!-- <label style="color:#9c27b0">COURSE ID:  {{classId}}</label><br>
 <label style="color:#9c27b0">Room:  {{class?.room}}</label><br>
@@ -13,16 +13,25 @@
 
 </div>
 
-  <div class="card" style="width: 58rem;" *ngFor="let answer of Answers">
-      <div class="card-body">
+  <div class="form-group" class="card" style="width: auto;height: auto" *ngFor="let answer of Answers">
+    <form #addVoteForm="ngForm" (submit)="voteUp(addVoteForm.value)" ngNativeValidate>
+    <div class="card-body" >
         <h5 class="card-title">{{answer.answer}}</h5>
+        <!-- <h4>[(answer.aid)]</h4> -->
+        <!-- <h3>[(answer.id)]</h3> -->
+        <label for="name">{{answer?.Name}}</label>
+        <h4 id="ansid" style="visibility:hidden">{{answer.id}}</h4>
+        <input id="ansvote" type="text" class="form-control" name="good" [(ngModel)]="answer.good" >
+        
+    </div>
        
-        <button type="button" class="btn btn-success">CORRECT</button>
-        <button type="button" class="btn btn-danger" id="wrn">WRONG</button>
-      </div>
+    </form>
+        <button type="button" class="btn btn-success" (click)="voteUp(answer)">CORRECT :{{answer.good}}</button>
+        <!-- <button type="button" class="btn btn-danger" id="wrn" (click)="voteDown(answer)">WRONG</button> -->
+      
     </div>
     
-    <div class="form-group" id="ansbox" >
+    <div class="form-group card" id="ansbox" style="width:auto" >
         <form #addAnswerForm="ngForm" (submit)="submitAnswer(addAnswerForm.value)">
       <strong><label for="exampleFormControlTextarea2">Answer</label></strong>
       <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" name="answer" ngModel></textarea>

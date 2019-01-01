@@ -1,35 +1,38 @@
-<div class="main-panel">
+<div class="main-panel" style="padding-right:2%">
     <app-header></app-header>
-<div class="mydiv" style="padding:30px;border:2px;border-style: dotted">
+<div class="mydiv card " style="padding:20px;border:2px;border-style: rounded">
 <u><h3 style="color:#9c27b0">TITLE:  {{class?.courseName}}</h3></u> <br>
-<label style="color:#9c27b0">COURSE ID:  {{classId}}</label><br>
+<!-- <label style="color:#9c27b0">COURSE ID:  {{classId}}</label><br> -->
 <label style="color:#9c27b0">Room:  {{class?.room}}</label><br>
 <label style="color:#9c27b0">Id: {{class?.courseId}}</label><br>
 <label style="color:#9c27b0">Students: {{class?.students.length}}</label><br>
-<label>QR CODE</label><br>
-<qrcode [qrdata]="classId"  colordark="#A23DB7" [size]="128" [level]="'L'"></qrcode>
+<a (click)="getStudentsList(classId)" class="btn btn-primary" style="color:white;width: 200px">STUDENTS LIST</a>
+<!-- <button style="color:#9c27b0" (click)="getStudentsList(classId)">STUDENTS LIST </button><br> -->
+<!-- <button style="color:#9c27b0" (click)="details(classId)">MESSSAGE TEACHER</button><br> -->
+<!-- <label>QR CODE</label><br>
+<qrcode [qrdata]="classId"  colordark="#A23DB7" [size]="128" [level]="'L'"></qrcode> -->
 
 </div>
-    <div class="card" style="width: 58rem;">
+    <div class="card" style="width:auto;">
         <div class="card-body">
-          <h5 class="card-title">RESOURCES</h5>
+          <h4 class="card-title">RESOURCES</h4>
           <p class="card-text">Assignments,Reading Material and Notifications </p>
-          <a (click)="ndetail(classId)" class="btn btn-primary">Resources</a>
+          <a (click)="ndetail(classId)" class="btn btn-primary" style="color:white">Resources</a>
         </div>
       </div>
       
-      <div class="card text-center" style="width: 58rem;">
+      <div class="card text-center" style="width: auto;">
         <div class="card-body">
-          <h5 class="card-title">DISCUSSION PANEL</h5>
+          <h4 class="card-title">DISCUSSION PANEL</h4>
           <p class="card-text">Public/Private Discussion in the course.</p>
-          <a (click)="mdetail(classId)" class="btn btn-primary">Discussion</a>
+          <a (click)="mdetail(classId)" class="btn btn-primary" style="color:white">Discussion</a>
         </div>
       </div>
       
-      <div class="card text-right" style="width: 58rem;">
+      <div class="card text-right" style="width: auto;">
         <div class="card-body">
-          <h5 class="card-title">QUIZ</h5>
+          <h4 class="card-title">QUIZ</h4>
           <p class="card-text">Mcqs Based Quiz.</p>
-          <a href="#" class="btn btn-primary">Quiz</a>
+          <a (click)="qdetail(classId)" class="btn btn-primary" style="color:white">Quiz</a>
         </div>
       </div>

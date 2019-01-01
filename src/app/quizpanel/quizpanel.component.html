@@ -1,0 +1,86 @@
+<div class="main-panel">
+  <app-studentheader>
+   
+  </app-studentheader>
+<div class="mydiv" style="padding:20px;border:2px;border-style: dotted;background-color:grey">
+<u><h3 style="color:#9c27b0">TITLE:  {{quiz?.title}}</h3></u> <br>
+<label style="color:#9c27b0">DATE:  {{quiz?.deadline}}</label><br>
+<label style="color:#9c27b0">START TIME:  {{quiz?.num1}}</label><br>
+<label style="color:#9c27b0">END TIME: {{quiz?.num}}</label><br>
+<label style="color:#9c27b0">NOTE: {{quiz?.note}}</label><br>
+
+
+
+
+</div>
+<div style="border:2px;border-style:dashed;padding:2%" >
+  
+<form  #quizSolution="ngForm" (submit)="submitQuiz(quizSolution.value)">
+
+<div class="row">
+
+    <div class="col-md-12 form-group">
+        <label for="" style="margin-left:20px">QUESTION 1</label><br>
+        <strong><label for="q1" style="color:black;font-size:large">{{quiz?.q1}}</label></strong><br>
+       <label for="opt1" style="margin-left:20px;margin-top: 50px;color:black;font-size:medium">{{quiz?.opt1}}</label><br>
+       <label for="opt2" style="margin-left:20px;margin-top: 70px;color:black;font-size:medium">{{quiz?.opt2}}</label><br>
+       <label for="opt3" style="margin-left:20px;margin-top: 90px;color:black;font-size:medium">{{quiz?.opt3}}</label><br>
+       <label for="opt4" style="margin-left:20px;margin-top: 110px;color:black;font-size:medium">{{quiz?.opt4}}</label>
+        <input name="correctans" type="text" class="form-control" placeholder="correct answer" ngModel>
+           </div>
+
+           <div class="col-md-12 form-group">
+            <label for="" style="margin-left:20px">QUESTION 2</label><br>
+            <strong><label for="q2" style="color:black;font-size:large">{{quiz?.q2}}</label></strong><br>
+           <label for="opt11" style="margin-left:20px;margin-top: 50px;color:black;font-size:medium">{{quiz?.opt11}}</label><br>
+           <label for="opt22" style="margin-left:20px;margin-top: 70px;color:black;font-size:medium">{{quiz?.opt22}}</label><br>
+           <label for="opt33" style="margin-left:20px;margin-top: 90px;color:black;font-size:medium">{{quiz?.opt33}}</label><br>
+           <label for="opt44" style="margin-left:20px;margin-top: 110px;color:black;font-size:medium">{{quiz?.opt44}}</label>
+            <input name="correctans2" type="text" class="form-control" placeholder="correct answer" ngModel>
+               </div>
+
+
+               <div class="col-md-12 form-group">
+                <label for="" style="margin-left:20px">QUESTION 3</label><br>
+                <strong><label for="q3" style="color:black;font-size:large">{{quiz?.q3}}</label></strong><br>
+               <label for="opt111" style="margin-left:20px;margin-top: 50px;color:black;font-size:medium">{{quiz?.opt111}}</label><br>
+               <label for="opt222" style="margin-left:20px;margin-top: 70px;color:black;font-size:medium">{{quiz?.opt222}}</label><br>
+               <label for="opt333" style="margin-left:20px;margin-top: 90px;color:black;font-size:medium">{{quiz?.opt333}}</label><br>
+               <label for="opt444" style="margin-left:20px;margin-top: 110px;color:black;font-size:medium">{{quiz?.opt444}}</label>
+                <input name="correctans3" type="text" class="form-control" placeholder="correct answer" ngModel>
+                   </div>
+    
+                   <div class="col-md-12 form-group">
+                    <label for="" style="margin-left:20px">QUESTION 4</label><br>
+                    <strong><label for="q4" style="color:black;font-size:large">{{quiz?.q4}}</label></strong><br>
+                   <label for="opt1111" style="margin-left:20px;margin-top: 50px;color:black;font-size:medium">{{quiz?.opt1111}}</label><br>
+                   <label for="opt2222" style="margin-left:20px;margin-top: 70px;color:black;font-size:medium">{{quiz?.opt2222}}</label><br>
+                   <label for="opt3333" style="margin-left:20px;margin-top: 90px;color:black;font-size:medium">{{quiz?.opt3333}}</label><br>
+                   <label for="opt4444" style="margin-left:20px;margin-top: 110px;color:black;font-size:medium">{{quiz?.opt4444}}</label>
+                    <input name="correctans4" type="text" class="form-control" placeholder="correct answer" ngModel>
+                       </div>
+        
+
+
+                       <div class="col-md-12 form-group">
+                        <label for="" style="margin-left:20px;">QUESTION 5</label><br>
+                        <strong><label for="q5" style="color:black;font-size:large">{{quiz?.q5}}</label></strong><br>
+                       <label for="opt11111" style="margin-left:20px;margin-top: 50px;color:black;font-size:medium">{{quiz?.opt11111}}</label><br>
+                       <label for="opt22222" style="margin-left:20px;margin-top: 70px;color:black;font-size:medium">{{quiz?.opt22222}}</label><br>
+                       <label for="opt33333" style="margin-left:20px;margin-top: 90px;color:black;font-size:medium">{{quiz?.opt33333}}</label><br>
+                       <label for="opt44444" style="margin-left:20px;margin-top: 110px;color:black;font-size:medium">{{quiz?.opt44444}}</label>
+                        <input name="correctans5" type="text" class="form-control" placeholder="correct answer" ngModel>
+                           </div>
+            
+
+
+
+</div>
+
+
+
+</form>
+
+<button type="button" class="btn btn-primary" (click)="submitQuiz(quizSolution.value)" >Save changes</button>
+
+  </div>

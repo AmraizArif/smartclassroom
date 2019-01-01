@@ -12,7 +12,10 @@ export class StudentsignupComponent implements OnInit {
   user={
     email:'',
     password:'',
-    rollno:''
+    rollno:'',
+    firstName:'',
+    lastName:''
+    
   }
   error;
   constructor(private router:Router, private api:ApiService) { }
@@ -44,7 +47,9 @@ export class StudentsignupComponent implements OnInit {
           uid: response.user.uid,
           email: this.user.email,
           password: this.user.password,
-          rollnum:this.user.rollno
+          rollnum:this.user.rollno,
+          firstName:this.user.firstName,
+        lastName:this.user.lastName,
         }).then(ondone=>{
   
      

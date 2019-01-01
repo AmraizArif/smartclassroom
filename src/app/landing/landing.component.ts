@@ -22,13 +22,13 @@ export class LandingComponent implements OnInit {
       {
         query: 'What is smartClass?',
         // tslint:disable-next-line:max-line-length
-        answer: `Smart Classroom (smartClass) is a highly innovative and smart way of taking classes. It invades the nervous system, and can cause paralysis or even death in a matter of hours. `,
+        answer: `Smart Classroom (smartClass) is a highly innovative and smart way of managing classes.  `,
         hide: false
       },
       {
         query: 'How does Smart Class works?',
         // tslint:disable-next-line:max-line-length
-        answer: `smartClassmyelitis (smartClass) is a highly infectious disease caused by the smartClass virus. It invades the nervous system, and can cause paralysis or even death in a matter of hours. `,
+        answer: `It provides hassle free course enrollements with the help of qr code `,
         hide: false
       }
       // {

@@ -10,56 +10,64 @@ import { ApiService } from '../api.service';
 export class LoginComponent implements OnInit {
 
 
-  user={
-    email:'username@email.com',
-    password:'anypass'
-  }
-error;  
-correct={
-  email:'username@gmail.com',
-  password:'anypass'
-}
+  user = {
+    email: 'username@email.com',
+    password: 'anypass'
+  };
+error;
+correct = {
+  email: 'username@gmail.com',
+  password: 'anypass'
+};
 
 
-  constructor(private router:Router, private api:ApiService) { }
+  constructor(private router: Router, private api: ApiService) { }
 
   ngOnInit() {
+    if(this.api.adminId){
+      this.router.navigate(['dashboard']);
+    }
+    else{
+      console.log("no user availaible")
+    }
   }
 
   resetPassword(email) {
-    this.api.resetPassword(email)
+    this.api.resetPassword(email);
   }
 
 
-  login(){
-    this.api.loginTeacher(this.user.email, this.user.password).then(response=>{
+  login() {
+    this.api.loginTeacher(this.user.email, this.user.password).then(response => {
 
-      this.api.getTeacherProfile(response.user.uid).subscribe(resp=>{
-        if(resp){ /* if database has the user */
-          this.error ='';
+      this.api.getTeacherProfile(response.user.uid).subscribe(resp => {
+        if (resp) { /* if database has the user */
+          this.error = '';
           this.api.adminId = response.user.uid;
           this.api.admin = response;
-          localStorage.setItem('uid',response.user.uid);
+          localStorage.setItem('uid', response.user.uid);
           this.router.navigate(['dashboard']);
-        }else{
-          this.error ='ERROR: No user profile found in the database. Please signup with another ID';
-          setTimeout(()=>{
+        } else {
+          this.error = 'ERROR: No user profile found in the database. Please signup with another ID';
+          setTimeout(() => {
+            // tslint:disable-next-line:no-unused-expression
             this.error;
-          },5000)
+          }, 5000);
 
         }
-     
-  
-        
-      })
-    
-    }, err=>{
-      this.error ='ERROR:'+err;
-      setTimeout(()=>{
-        this.error;
-      },5000)
 
-    })
+
+
+      });
+
+    }, err => {
+      this.error = 'ERROR:' + err;
+      setTimeout(() => {
+        // tslint:disable-next-line:no-unused-expression
+        this.error;
+      }, 5000);
+
+    });
     // if(this.user.email=='moeidsaleem@gmail.com' && this.user.password == 'moeid123' ){
     //   this.error=''
     //   console.log(this.user);
@@ -74,6 +82,6 @@ correct={
 
   }
 
-  
+
 
 }

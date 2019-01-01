@@ -1,0 +1,393 @@
+
+<div class="main-panel">
+  <app-header></app-header>
+  <div class="content" >
+  <div class="container-fluid row">
+     
+
+        
+        
+    <!-- READ QUIZZES -->
+    <div class="col-md-12">
+    <div class="container" id="multiCollapseExample1">
+     
+          <div class="card">
+              <div class="card-header card-header-primary">
+                  <h4 class="card-title text-center ">Quiz               
+                      <div class="pull-right btn btn-warning" data-toggle="modal" role="dialog" data-target="#addAssignmentModal" data-backdrop="static" date-keyboard="false" data-focus="true" #tref><i class="fa fa-plus" aria-hidden="true"></i> ADD</div>
+                  </h4>
+                  <p class="card-category"> Quizzes Summary </p>
+              </div>
+              <div class="card-body">
+                  <div class="table-responsive">
+                  
+                    
+                    <table class="table"> 
+                        <thead class=" text-primary">
+                            <th (click)="orderBy('courseName')">
+                                Quiz #
+                                <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                            </th>
+                            
+                            <th (click)="orderBy('courseId')">
+                              Date
+                              <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                            </th>
+                            <th>
+                              Topic
+                            </th>
+                            <th>
+                              Status
+                            </th>
+                             <th>
+                                Actions
+                            </th>
+
+                        </thead>
+                        <tbody *ngIf="quiz">
+                            <tr *ngFor="let x of quiz">
+                                <td class="small">
+                                  {{x?.title}}
+                                </td>
+                                <td class="small">
+                                  {{x?.deadline}}
+                                </td>
+                                <td class="small">
+                                  {{x?.title}}
+                                </td>
+                                <td class="small">
+                                    
+                                        <span class="badge badge-warning" *ngIf="x.status == 'active'">Active</span>
+                                        <span class="badge badge-success" *ngIf="x.status == 'completed'">Completed</span>
+                                        <span class="badge badge-danger" *ngIf="x.status == 'cancel'">Cancel</span>
+                     
+                                </td>
+                                 <td>
+
+                                    <span class="btn btn-sm btn-danger" (click)="selectedQuiz = x" data-toggle="modal" data-target="#deleteAssignmentModal" > <i class="fa fa-remove" aria-hidden="true"></i></span> 
+                                    <span class="btn btn-sm btn-warning" (click)="selectedQuiz = x" data-toggle="modal" data-target="#editAssignmentModal" > <i class="fa fa-edit" aria-hidden="true"></i></span> 
+                                    <span class="btn btn-sm btn-success" (click)="selectedQuiz = x " data-toggle="modal" data-target="#quizMarksModal"> <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span> 
+                                  </td>
+                            </tr>
+                        </tbody>
+                    </table>                   </div>
+              </div>
+          </div>
+      </div>
+
+</div>
+
+     
+
+
+
+ 
+
+
+  
+
+  <!-- ::::::::::::::::::::::::::::::::::::::::::::::::: MODALS ::::::::::::::::::::::::::::::::::::: -->
+
+  <!-- :::::::::::::: Quizzes ::::::::::: -->
+
+  <!--ADD Quiz -->
+  <div class="modal fade" id="addAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="addAssignmentModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addAssignmentModalLabel">Add Quiz</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+          <div class="container">
+            <form #addAssignmentForm="ngForm" (submit)="submitQuiz(addAssignmentForm.value)">
+                <div class="row">
+          <div class="col-md-12 form-group">
+            <label for=""></label>
+            <input type="text"
+              class="form-control" name="title" placeholder="Quiz Title" ngModel>
+          </div>
+          <div class="col-md-6 form-group">
+            <label for=""></label>
+            <input type="number"
+              class="form-control" name="stime"  aria-describedby="helpId" placeholder="QUIZ START TIME" ngModel required>
+          </div>
+          <div class="col-md-6 form-group">
+            <label for=""></label>
+            <input type="number"
+              class="form-control" name="etime"  aria-describedby="helpId" placeholder="QUIZ END TIME" ngModel required>
+          </div>
+          <div class="col-md-6 form-group">
+              <label for=""></label>
+              <input type="date"
+                class="form-control" name="deadline" aria-describedby="helpId" placeholder="QUIZ DATE" ngModel required>
+            </div>
+        
+                  <div class="col-md-6 form-group">
+                          <label for="">Status</label>
+                          <select class="form-control" name="status" ngModel>
+                            <option value="active">Active</option>
+                            <option value="completed">completed</option>
+                            <option value="cancel">cancel</option>
+                          </select>
+                      </div>
+
+                    
+              
+                      
+                  <div class="col-md-12 form-group">
+                      <label for="">Note</label><br>
+                      <textarea class="form-control" name="note"  rows="3" placeholder=" " ngModel></textarea>
+                    </div>
+                    
+                  <div class="col-md-12 form-group">
+<label for="">QUESTION 1</label><br>
+<strong><input type="text" class="form-control" placeholder="write question here" name="q1" ngModel required></strong>
+<input name="opt1" type="text" class="form-control" placeholder="option 1" ngModel required>
+<input name="opt2" type="text" class="form-control" placeholder="option 2" ngModel required>
+<input name="opt3" type="text" class="form-control" placeholder="option 3" ngModel required>
+<input  name="opt4" type="text" class="form-control" placeholder="option 4" ngModel required>
+<input name="correct1" type="text" class="form-control" placeholder="correct answer" ngModel required>
+                  </div>
+                  <div class="col-md-12 form-group">
+                    <label for="">QUESTION 2</label><br>
+                    <strong><input type="text" name="q2" class="form-control" placeholder="write question here" ngModel required></strong>
+                    <input name="opt11" type="text" class="form-control" placeholder="option 1" ngModel required>
+                    <input name="opt22" type="text" class="form-control" placeholder="option 2" ngModel required>
+                    <input name="opt33" type="text" class="form-control" placeholder="option 3" ngModel required>
+                    <input  name="opt44" type="text" class="form-control" placeholder="option 4" ngModel required>
+                    <input name="correct11" type="text" class="form-control" placeholder="correct answer" ngModel required>
+                                      </div>
+                                      <div class="col-md-12 form-group">
+                                        <label for="">QUESTION 3</label><br>
+                                        <strong><input type="text" name="q3" class="form-control" placeholder="write question here" ngModel required></strong>
+                                        <input name="opt111" type="text" class="form-control" placeholder="option 1" ngModel required>
+                                        <input name="opt222" type="text" class="form-control" placeholder="option 2" ngModel required>
+                                        <input name="opt333" type="text" class="form-control" placeholder="option 3" ngModel required>
+                                        <input  name="opt444" type="text" class="form-control" placeholder="option 4" ngModel required>
+                                        <input name="correct111" type="text" class="form-control" placeholder="correct answer" ngModel required>
+                                                          </div>
+                                                          <div class="col-md-12 form-group">
+                                                            <label for="">QUESTION 4</label><br>
+                                                            <strong><input type="text" name="q4" class="form-control" placeholder="write question here" ngModel required></strong>
+                                                            <input name="opt1111" type="text" class="form-control" placeholder="option 1" ngModel required>
+                                                            <input name="opt2222" type="text" class="form-control" placeholder="option 2" ngModel required>
+                                                            <input name="opt3333" type="text" class="form-control" placeholder="option 3" ngModel required>
+                                                            <input  name="opt4444" type="text" class="form-control" placeholder="option 4" ngModel required>
+                                                            <input name="correct1111" type="text" class="form-control" placeholder="correct answer" ngModel required>
+                                                                              </div>
+                                                                              <div class="col-md-12 form-group">
+                                                                                <label for="">QUESTION 5</label><br>
+                                                                                <strong><input type="text" name="q5" class="form-control" placeholder="write question here" ngModel required></strong>
+                                                                                <input name="opt11111" type="text" class="form-control" placeholder="option 1" ngModel required>
+                                                                                <input name="opt22222" type="text" class="form-control" placeholder="option 2" ngModel required>
+                                                                                <input name="opt33333" type="text" class="form-control" placeholder="option 3" ngModel required>
+                                                                                <input  name="opt44444" type="text" class="form-control" placeholder="option 4" ngModel required>
+                                                                                <input name="correct11111" type="text" class="form-control" placeholder="correct answer" ngModel required>
+                                                                                                  </div>
+
+                </div>
+        </form>
+        
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" [disabled]="!addAssignmentForm.valid" (click)="submitQuiz(addAssignmentForm.value)" >Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--  EDIT QUIZ-->
+  <div class="modal fade" id="editAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="editAssignmentModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModal">Edit Quiz</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" *ngIf="selectedQuiz">
+          <div class="container">
+            <form #assignmentUpdateForm="ngForm" (submit)="updateQuiz(selectedQuiz)">
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label for=""></label>
+                        <input type="text"
+                          class="form-control" name="title" placeholder="Quiz Title" [(ngModel)]="selectedQuiz.title">
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label for=""></label>
+                        <input type="number"
+                          class="form-control" name="stime"  aria-describedby="helpId" placeholder="QUIZ START TIME" [(ngModel)]="selectedQuiz.stime">
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label for=""></label>
+                        <input type="number"
+                          class="form-control" name="etime"  aria-describedby="helpId" placeholder="QUIZ END TIME" [(ngModel)]="selectedQuiz.etime">
+                      </div>
+                      <div class="col-md-6 form-group">
+                          <label for=""></label>
+                          <input type="date"
+                            class="form-control" name="deadline" aria-describedby="helpId" placeholder="QUIZ DATE" [(ngModel)]="selectedQuiz.deadline">
+                        </div>
+                    
+                              <div class="col-md-6 form-group">
+                                      <label for="">Status</label>
+                                      <select class="form-control" name="status" [(ngModel)]="selectedQuiz.status">
+                                        <option value="active">Active</option>
+                                        <option value="completed">completed</option>
+                                        <option value="cancel">cancel</option>
+                                      </select>
+                                  </div>
+            
+                                
+                          
+                                  
+                              <div class="col-md-12 form-group">
+                                  <label for="">Note</label>
+                                  <textarea class="form-control" name="note"  rows="3" placeholder=" " [(ngModel)]="selectedQuiz.note"></textarea>
+                                </div>
+                                
+                              <div class="col-md-12 form-group">
+            <label for="">QUESTION 1</label><br>
+            <strong><input type="text" class="form-control" placeholder="write question here" name="q1" [(ngModel)]="selectedQuiz.q1"></strong>
+            <input name="opt1" type="text" class="form-control" placeholder="option 1" [(ngModel)]="selectedQuiz.opt1">
+            <input name="opt2" type="text" class="form-control" placeholder="option 2" [(ngModel)]="selectedQuiz.opt2">
+            <input name="opt3" type="text" class="form-control" placeholder="option 3" [(ngModel)]="selectedQuiz.opt3">
+            <input  name="opt4" type="text" class="form-control" placeholder="option 4" [(ngModel)]="selectedQuiz.opt4">
+            <input name="correct1" type="text" class="form-control" placeholder="correct answer" [(ngModel)]="selectedQuiz.correct1">
+                              </div>
+                              <div class="col-md-12 form-group">
+                                <label for="">QUESTION 2</label><br>
+                                <strong><input type="text" name="q2" class="form-control" placeholder="write question here" [(ngModel)]="selectedQuiz.q2"></strong>
+                                <input name="opt11" type="text" class="form-control" placeholder="option 1" [(ngModel)]="selectedQuiz.opt11">
+                                <input name="opt22" type="text" class="form-control" placeholder="option 2" [(ngModel)]="selectedQuiz.opt22">
+                                <input name="opt33" type="text" class="form-control" placeholder="option 3" [(ngModel)]="selectedQuiz.opt33">
+                                <input  name="opt44" type="text" class="form-control" placeholder="option 4" [(ngModel)]="selectedQuiz.opt44">
+                                <input name="correct11" type="text" class="form-control" placeholder="correct answer" [(ngModel)]="selectedQuiz.correct11">
+                                                  </div>
+                                                  <div class="col-md-12 form-group">
+                                                    <label for="">QUESTION 3</label><br>
+                                                    <strong><input type="text" name="q3" class="form-control" placeholder="write question here" [(ngModel)]="selectedQuiz.q3"></strong>
+                                                    <input name="opt111" type="text" class="form-control" placeholder="option 1" [(ngModel)]="selectedQuiz.opt111">
+                                                    <input name="opt222" type="text" class="form-control" placeholder="option 2" [(ngModel)]="selectedQuiz.opt222">
+                                                    <input name="opt333" type="text" class="form-control" placeholder="option 3" [(ngModel)]="selectedQuiz.opt333">
+                                                    <input  name="opt444" type="text" class="form-control" placeholder="option 4" [(ngModel)]="selectedQuiz.opt444">
+                                                    <input name="correct111" type="text" class="form-control" placeholder="correct answer" [(ngModel)]="selectedQuiz.correct111">
+                                                                      </div>
+                                                                      <div class="col-md-12 form-group">
+                                                                        <label for="">QUESTION 4</label><br>
+                                                                        <strong><input type="text" name="q4" class="form-control" placeholder="write question here" [(ngModel)]="selectedQuiz.q4"></strong>
+                                                                        <input name="opt1111" type="text" class="form-control" placeholder="option 1" [(ngModel)]="selectedQuiz.opt1111">
+                                                                        <input name="opt2222" type="text" class="form-control" placeholder="option 2" [(ngModel)]="selectedQuiz.opt2222">
+                                                                        <input name="opt3333" type="text" class="form-control" placeholder="option 3" [(ngModel)]="selectedQuiz.opt3333">
+                                                                        <input  name="opt4444" type="text" class="form-control" placeholder="option 4" [(ngModel)]="selectedQuiz.opt4444">
+                                                                        <input name="correct1111" type="text" class="form-control" placeholder="correct answer" [(ngModel)]="selectedQuiz.correct1111">
+                                                                                          </div>
+                                                                                          <div class="col-md-12 form-group">
+                                                                                            <label for="">QUESTION 5</label><br>
+                                                                                            <strong><input type="text" name="q5" class="form-control" placeholder="write question here" [(ngModel)]="selectedQuiz.q5"></strong>
+                                                                                            <input name="opt11111" type="text" class="form-control" placeholder="option 1" [(ngModel)]="selectedQuiz.opt11111">
+                                                                                            <input name="opt22222" type="text" class="form-control" placeholder="option 2" [(ngModel)]="selectedQuiz.opt22222">
+                                                                                            <input name="opt33333" type="text" class="form-control" placeholder="option 3" [(ngModel)]="selectedQuiz.opt33333">
+                                                                                            <input  name="opt44444" type="text" class="form-control" placeholder="option 4" [(ngModel)]="selectedQuiz.opt44444">
+                                                                                            <input name="correct11111" type="text" class="form-control" placeholder="correct answer" [(ngModel)]="selectedQuiz.correct11111">
+                                                                                                              </div>
+         
+                </div>
+        </form>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="updateQuiz(selectedQuiz)" >Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<!--  DELETE ASSIGNMENT -->
+<div class="modal fade" id="deleteAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="deleteAssignmentModal" aria-hidden="true">
+  <div class="modal-dialog modal-sm|lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="deleteModal">Confirm Delete</h4>
+      </div>
+      <div class="modal-body" *ngIf="selectedAssignment">
+       Are you sure you want to delete <span class="text-danger">  {{selectedQuiz?.title}}</span> ?       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" (click)="deleteQuiz(selectedQuiz)">Delete</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+  <!-- QUIZ MARKS MODAL-->
+  
+<div class="modal fade" id="quizMarksModal" tabindex="-1" role="dialog" aria-labelledby="quizMarksModal" aria-hidden="true">
+    <div class="modal-dialog modal-sm|lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="quizMarksModal">Student Marks</h4>
+        </div>
+        <div class="modal-body" *ngIf="selectedQuiz">
+         <button (click)="getMarks()">SHOW MARKS</button>
+          <table class="table"> 
+              <thead class=" text-primary">
+                  <th (click)="orderBy('courseName')">
+                      Quiz #
+                      <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                  </th>
+                  
+                  <th (click)="orderBy('courseId')">
+                    Student Name
+                    <i *ngIf="order == 'courseName'"class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                  </th>
+                  <th>
+                   Marks
+                  </th>
+                  
+
+              </thead>
+              <tbody *ngIf="marks">
+                  <tr *ngFor="let x of marks">
+                      <td class="small">
+                        {{x?.title}}
+                      </td>
+                      <td class="small">
+                        {{x?.creatorName}}
+                      </td>
+                      <td class="small">
+                        {{x?.Marks}}
+                      </td>
+                      
+                  </tr>
+              </tbody>
+          </table>        
+       
+        </div>
+        
+      </div>
+    </div>
+    </div>
+
+
+
+
+ 

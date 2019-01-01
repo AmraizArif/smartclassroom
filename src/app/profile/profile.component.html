@@ -13,19 +13,14 @@
                         </div>
                         <div class="card-body" *ngIf="admin">
                                 <div class="row">
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Company (disabled)</label>
-                                            <input type="text" class="form-control" disabled [(ngModel)]="admin.company">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
+                                   
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Role</label>
                                             <input type="text" class="form-control" [(ngModel)]="admin.role">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Email address</label>
                                             <input type="email" class="form-control" [(ngModel)]="admin.email">
@@ -79,12 +74,20 @@
                                         <div class="form-group">
                                             <label>About Me</label>
                                             <div class="form-group">
-                                                <!-- <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label> -->
-                                                <textarea class="form-control" rows="5" [(ngModel)]="admin.aboutMe"></textarea>
+                                                
+                                                <textarea class="form-control" rows="3" [(ngModel)]="admin.aboutMe"></textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="card">
+
+                                <label for="startTime"> CHAT START TIME</label>
+                            <input class="form-control" type="number"  [(ngModel)]="admin.startTime" placeholder="9.00">
+                            <label for="endTime"> END TIME</label>
+                            <input class="form-control" type="number"[(ngModel)]="admin.endTime"  placeholder="5.00">
+                            </div>
+                                <button class="btn btn-primary pull-left" data-toggle="modal" data-target="#resetModal">Reset Password</button>
                                 <button class="btn btn-primary pull-right" (click)="updateProfile()">Update Profile</button>
                                 <div class="clearfix"></div>
                         </div>
@@ -92,15 +95,16 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card card-profile"  *ngIf="admin">
-                        <div class="card-avatar">
+                        <!-- <div class="card-avatar">
                             <a>
                                 <img class="img" src="{{admin.photo || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmughOkCavHBE5mHZggWG--JGbcXpVMABbdPTG--OK1K6o1v769g'}} " />
 
                               
                             </a>
-                        </div>
+                        </div> -->
+                    
                         <div class="card-body">
-                                <input type="text" class="form-control" [(ngModel)]="admin.photo">
+                                <!-- <input type="text" class="form-control" [(ngModel)]="admin.photo"> -->
 
                             <h6 class="card-category text-gray">{{admin.role}}</h6>
                             <h4 class="card-title">{{admin.firstName}} {{admin.lastName}}</h4>
@@ -150,3 +154,24 @@
         </div>
     </footer> -->
 </div>
+
+<!---RESEt MODAL-->
+<div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="resetModal" aria-hidden="true">
+    <div class="modal-dialog modal-sm|lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="resetModal">Reset Password</h4>
+        </div>
+        <div class="modal-body" *ngIf="admin.email">
+         Are you sure you want to reset password for<span class="text-danger">  {{ admin?.email}}</span> ?       
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-danger" (click)="resetPass(admin.email)"  >Yes</button>
+        </div>
+      </div>
+    </div>
+    </div>

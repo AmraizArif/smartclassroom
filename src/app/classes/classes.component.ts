@@ -18,7 +18,7 @@ export class ClassesComponent implements OnInit {
 
   classes;
   selectedClass;
-
+selectedQr;
 
   xxx=''
   order: string = 'name';

@@ -19,6 +19,8 @@ export class CoursepanelComponent implements OnInit {
   classId;
   selectedAssignment;
   selectedQuiz;
+  std:any=[];
+  stdprofile:any=[];
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
     this.classId = id;
@@ -28,7 +30,15 @@ export class CoursepanelComponent implements OnInit {
   getClass(id){
     this.api.getClass(id).subscribe(res=>{
       this.class =res;
+this.std=this.class.students;
+console.log(this.std);
+for(let some of this.std){
+this.api.getStudentProfile(some).subscribe(res=>{
+this.stdprofile=res;
+console.log(this.stdprofile)
 
+})
+}
     })
  }
  ndetail(c){
@@ -40,6 +50,18 @@ export class CoursepanelComponent implements OnInit {
 mdetail(c){
   console.log(c);
   this.router.navigate([`/dashboard/discussion/${c}`]);
+  //this.router.navigate([`/dashboard/cpanel/${c.id}`]);
+}
+
+getStudentsList(c){
+  console.log(c);
+  this.router.navigate([`/dashboard/students/${c}`]);
+}
+
+
+qdetail(id){
+  console.log(id);
+  this.router.navigate([`/dashboard/quiz/${id}`]);
   //this.router.navigate([`/dashboard/cpanel/${c.id}`]);
 }
 
